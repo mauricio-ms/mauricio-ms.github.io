@@ -155,7 +155,14 @@
               :publishing-function org-html-publish-to-html
               :with-title nil
               :with-timestamps nil)
-            '("blog:assets"
+			'("blog:posts"
+              :base-directory "./content/posts"
+              :base-extension "org"
+              :publishing-directory "./public"
+              :publishing-function org-html-publish-to-html
+              :with-title nil
+              :with-timestamps nil)
+			'("blog:assets"
               :base-directory "./assets"
               :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|woff2\\|ttf"
               :publishing-directory "./public"
