@@ -1,0 +1,5 @@
+#+title: Home
+
+Meu nome é Maurício Mussatto Scopel. Tenho trabalhado com tecnologia por mais de 10 anos, trabalhei em diversos projetos, desde grandes monolitos até arquiteturas completamente distribuídas.
+
+Meus principais interesses são os fundamentos da ciência da computação e mais recentemente: Emacs e programação funcional. O objetivo do blog Vida em 8 Bits é escrever sobre esses assuntos como uma forma de deixar meus estudos documentados para a posteridade.
