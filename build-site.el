@@ -145,8 +145,30 @@
                           plist
                           article-path))))
 
-;; Define the publishing project
+(defun parse-date (date)
+  "Parse DATE to dd de mm, yyyy."
+  (format-time-string "%d de %B, %Y" date))
 
+(defun get-commit-date (filepath)
+  (string-trim-right
+   (with-output-to-string
+	 (with-current-buffer standard-output
+	   (vc-git-command t nil nil "log" "--date=short" "--format=%cd" filepath)))))
+
+(with-temp-file "content/blog.org"
+  (let ((posts-folder "./content/posts/"))
+	(seq-do
+	 (lambda (post)
+	   (insert (format "[[../%s][%s]]\n\n"
+					   (car (string-split post ".org"))
+					   (org-get-title (concat posts-folder post))))
+	   (insert (format "%s por Maurício Mussatto Scopel\n"
+					   (parse-date
+						(date-to-time
+						 (get-commit-date "content/posts/criando-um-blog-no-emacs.org"))))))
+	 (directory-files posts-folder nil ".org"))))
+
+;; Define the publishing project
 (setq org-publish-project-alist
       (list '("blog:main"
               :base-directory "./content"
