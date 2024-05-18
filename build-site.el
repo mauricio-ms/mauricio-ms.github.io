@@ -149,6 +149,12 @@
   "Parse DATE to dd de mm, yyyy."
   (format-time-string "%d de %B, %Y" date))
 
+(defun get-branch ()
+  (string-trim-right
+   (with-output-to-string
+	 (with-current-buffer standard-output
+	   (vc-git-command t nil nil "branch")))))
+
 (defun get-commit-date (filepath)
   (string-trim-right
    (with-output-to-string
@@ -163,9 +169,10 @@
 					   (car (org-split-string post ".org"))
 					   "(org-get-title (concat posts-folder post))"
 					   ))
-	   (insert (format "%s por Maurício Mussatto Scopel\n"
+	   (insert (format "%s %s por Maurício Mussatto Scopel\n"
 					   ;;(parse-date
-						;;(date-to-time
+					   ;;(date-to-time
+					   (get-branch)
 					   (get-commit-date (concat posts-folder post))
 					   ;;(get-commit-date "./content/posts/criando-um-blog-no-emacs.org")
 						 ;;))
