@@ -164,9 +164,11 @@
 					   "(org-get-title (concat posts-folder post))"
 					   ))
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
-					   (parse-date
-						(date-to-time
-						 (get-commit-date (concat "content/posts/" post)))))))
+					   ;;(parse-date
+						;;(date-to-time
+						 (get-commit-date (concat "content/posts/" post))
+						 ;;))
+					   )))
 	 (directory-files posts-folder nil ".org"))))
 
 ;; Define the publishing project
