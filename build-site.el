@@ -18,7 +18,6 @@
 
 ;; Install dependencies
 (package-install 'htmlize)
-(package-install 'org)
 
 ;; Load the publishing system
 (require 'ox-publish)
@@ -162,7 +161,8 @@
 	 (lambda (post)
 	   (insert (format "[[../%s][%s]]\n\n"
 					   (car (org-split-string post ".org"))
-					   (org-get-title (concat posts-folder post))))
+					   "(org-get-title (concat posts-folder post))"
+					   ))
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
 					   (parse-date
 						(date-to-time
