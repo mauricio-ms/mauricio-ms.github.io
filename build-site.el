@@ -162,6 +162,7 @@
 	   (vc-git-command t nil nil "log" "--max-count=1" "--date=short" "--format=%cd" filepath)))))
 
 (defun get-commit (filepath)
+  (message "get-commit %s" filepath)
   (string-trim-right
    (with-output-to-string
 	 (with-current-buffer standard-output
