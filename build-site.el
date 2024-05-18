@@ -166,7 +166,9 @@
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
 					   (parse-date
 						(date-to-time
-						 (get-commit-date "content/posts/criando-um-blog-no-emacs.org"))))))
+						 "2024-01-01"
+						 ;;(get-commit-date "content/posts/criando-um-blog-no-emacs.org")
+						 )))))
 	 (directory-files posts-folder nil ".org"))))
 
 ;; Define the publishing project
