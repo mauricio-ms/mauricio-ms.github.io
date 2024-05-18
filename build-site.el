@@ -18,6 +18,7 @@
 
 ;; Install dependencies
 (package-install 'htmlize)
+(package-install 'org)
 
 ;; Load the publishing system
 (require 'ox-publish)
@@ -26,10 +27,6 @@
 (require 'vc-git)
 
 (use-package esxml
-  :pin "melpa-stable"
-  :ensure t)
-
-(use-package org
   :pin "melpa-stable"
   :ensure t)
 
