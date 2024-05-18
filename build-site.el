@@ -180,7 +180,7 @@
 					   ;;(parse-date
 					   ;;(date-to-time
 					   (get-branch)
-					   (get-commit (concat posts-folder post))
+					   (get-commit "content/posts/criando-um-blog-no-emacs.org")
 					   ;;(get-commit-date "./content/posts/criando-um-blog-no-emacs.org")
 						 ;;))
 					   )))
