@@ -153,7 +153,7 @@
   (string-trim-right
    (with-output-to-string
 	 (with-current-buffer standard-output
-	   (vc-git-command t nil nil "log" "--date=short" "--format=%cd" filepath)))))
+	   (vc-git-command t nil nil "log" "--max-count=1" "--date=short" "--format=%cd" filepath)))))
 
 (with-temp-file "content/blog.org"
   (let ((posts-folder "./content/posts/"))
@@ -166,9 +166,7 @@
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
 					   (parse-date
 						(date-to-time
-						 "2024-01-01"
-						 ;;(get-commit-date "content/posts/criando-um-blog-no-emacs.org")
-						 )))))
+						 (get-commit-date (concat "content/posts/" post)))))))
 	 (directory-files posts-folder nil ".org"))))
 
 ;; Define the publishing project
