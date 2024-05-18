@@ -159,7 +159,13 @@
   (string-trim-right
    (with-output-to-string
 	 (with-current-buffer standard-output
-	   (vc-git-command t nil nil "log" "master" "--max-count=1" "--date=short" "--format=%cd" filepath)))))
+	   (vc-git-command t nil nil "log" "--max-count=1" "--date=short" "--format=%cd" filepath)))))
+
+(defun get-commit (filepath)
+  (string-trim-right
+   (with-output-to-string
+	 (with-current-buffer standard-output
+	   (vc-git-command t nil nil "log" "--max-count=1" filepath)))))
 
 (with-temp-file "content/blog.org"
   (let ((posts-folder "./content/posts/"))
@@ -173,7 +179,7 @@
 					   ;;(parse-date
 					   ;;(date-to-time
 					   (get-branch)
-					   (get-commit-date (concat posts-folder post))
+					   (get-commit (concat posts-folder post))
 					   ;;(get-commit-date "./content/posts/criando-um-blog-no-emacs.org")
 						 ;;))
 					   )))
