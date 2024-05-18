@@ -166,7 +166,7 @@
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
 					   ;;(parse-date
 						;;(date-to-time
-						 (get-commit-date (concat "content/posts/" post))
+						 (get-commit-date (concat posts-folder post))
 						 ;;))
 					   )))
 	 (directory-files posts-folder nil ".org"))))
