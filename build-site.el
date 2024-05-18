@@ -166,7 +166,7 @@
   (string-trim-right
    (with-output-to-string
 	 (with-current-buffer standard-output
-	   (vc-git-command t nil nil "log" "--max-count=1" filepath)))))
+	   (vc-git-command t nil filepath "log" "--max-count=1")))))
 
 (with-temp-file "content/blog.org"
   (let ((posts-folder "./content/posts/"))
