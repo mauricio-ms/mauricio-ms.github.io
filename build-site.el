@@ -164,11 +164,9 @@
 					   "(org-get-title (concat posts-folder post))"
 					   ))
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
-					   "TEST"
-					   ;; (parse-date
-					   ;; 	(date-to-time
-					   ;; 	 (get-commit-date "content/posts/criando-um-blog-no-emacs.org")))
-					   )))
+					   (parse-date
+						(date-to-time
+						 (get-commit-date "content/posts/criando-um-blog-no-emacs.org"))))))
 	 (directory-files posts-folder nil ".org"))))
 
 ;; Define the publishing project
