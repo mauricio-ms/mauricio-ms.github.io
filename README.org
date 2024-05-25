@@ -1,3 +1,5 @@
 # BLOG
 
 =M-x httpd-serve-directory= - Start blog locally
+
+Analytics: https://clicky.com/

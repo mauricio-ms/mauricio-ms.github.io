@@ -86,6 +86,11 @@
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/jetbrains-mono/jetbrains-mono.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/css/code.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/css/site.css"))))
+			(script (@ (async "")
+                       (data-id "101454377")
+                       (src "//static.getclicky.com/js"))
+                    ;; Empty string to cause a closing </script> tag
+                    "")
             ,(when head-extra head-extra)
             (title ,(concat title " - Vida em 8 Bits")))
            (body ,@(unless exclude-header
