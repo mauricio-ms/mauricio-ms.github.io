@@ -17,7 +17,7 @@
 (require 'use-package)
 
 ;; Install dependencies
-(package-install 'htmlize)
+(use-package htmlize :ensure t)
 
 ;; Load the publishing system
 (require 'ox-publish)
@@ -29,11 +29,20 @@
   :pin "melpa-stable"
   :ensure t)
 
-;; Customize the HTML output
-(setq org-html-validation-link nil            ;; Don't show validation link
-      org-html-head-include-scripts nil       ;; Use our own scripts
-      org-html-head-include-default-style nil ;; Use our own styles
-      org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+(setq org-publish-use-timestamps-flag t
+      org-export-with-section-numbers nil
+      org-export-use-babel nil
+      org-export-with-smart-quotes t
+      org-export-with-sub-superscripts nil
+      org-export-with-tags 'not-in-toc
+      org-html-htmlize-output-type 'css
+      org-html-prefer-user-labels t
+      org-html-link-use-abs-url t
+      org-html-link-org-files-as-html t
+      org-html-html5-fancy t
+      org-html-self-link-headlines t
+      org-export-with-toc nil
+      make-backup-files nil)
 
 (defvar dw/site-url (if (string-equal (getenv "CI") "true")
                         "https://mauricio-ms.github.io" ;;"https://vidaem8bits.com"
@@ -51,7 +60,8 @@
                       (div (@ (class "container"))
                            (nav (@ (class "nav"))
                                 (a (@ (class "nav-link") (href "/")) "Home") " "
-                                (a (@ (class "nav-link") (href "/blog/")) "Blog") " "))))))
+                                (a (@ (class "nav-link") (href "/blog/")) "Blog") " "
+								(a (@ (class "nav-link") (target "_blank") (href "https://github.com/mauricio-ms")) "GitHub") " "))))))
 
 (defun dw/site-footer ()
   (list `(footer (@ (class "site-footer"))

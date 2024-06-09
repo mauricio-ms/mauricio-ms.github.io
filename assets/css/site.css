@@ -146,21 +146,33 @@ h6 {
   line-height: 1.2;
   margin-top: 1.3rem;
   margin-bottom: 0.5rem;
-  color: #eeffff;
 }
 
 h1 {
-  color: #ffffff;
+  color: #ffff33;
+}
+
+h2 > a {
+	color: #ffff33;
+	text-decoration: none;
+}
+
+h2 > a:hover, h2 > a:focus {
+	color: #ffff33;
+	text-decoration: underline;
+}
+
+nav > a , nav > a:hover, nav > a:focus {
+	text-decoration: none;
 }
 
 a {
-  /* color: #c3e88d; */
-  color: #82aaff;
+  text-decoration: underline;
 }
 
 a:hover,
 a:focus {
-  color: #82aaff;
+  color: #ffffff;
 }
 
 .anchor {
@@ -187,13 +199,13 @@ kbd {
 
 pre {
   font-family: "JetBrains Mono", monospace;
-  background-color: #232635;
+  background-color: rgba(28, 31, 38, 0.5);
   padding: 1em;
   overflow-x: scroll;
 }
 
 code {
-  color: #c3e88d;
+  color: #ffff33;
 }
 
 pre,
@@ -328,7 +340,6 @@ strong {
   font-size: 1rem;
   background-color: rgba(28, 31, 38, 0.5);
   border-top: 0.05rem solid #feff01;
-  position: fixed;
   bottom: 0;
   width: 100%;
   text-align: center;
