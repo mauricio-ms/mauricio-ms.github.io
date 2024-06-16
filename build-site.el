@@ -29,6 +29,14 @@
   :pin "melpa-stable"
   :ensure t)
 
+;; OpenGraph variables
+(defvar og-title nil
+  "Variable to control the OpenGraph page title.")
+(defvar og-type nil
+  "Variable to control the OpenGraph page type.")
+(defvar og-url nil
+  "Variable to control the OpenGraph url page.")
+
 (setq org-publish-use-timestamps-flag t
       org-export-with-section-numbers nil
       org-export-use-babel nil
@@ -72,15 +80,7 @@
   :translate-alist
   '((template . dw/org-html-template)))
 
-(cl-defun dw/generate-page (title
-                            content
-                            info
-                            &key
-                            (publish-date)
-                            (head-extra)
-                            (pre-content)
-                            (exclude-header)
-                            (exclude-footer))
+(cl-defun dw/generate-page (title content info &key (publish-date))
   (concat
    "<!-- Generated from " (dw/get-commit-hash)  " on " (format-time-string "%Y-%m-%d @ %H:%M") " with " org-export-creator-string " -->\n"
    "<!DOCTYPE html>"
@@ -91,7 +91,15 @@
             (meta (@ (author "Vida em 8 Bits - Maurício Mussatto Scopel")))
             (meta (@ (name "viewport")
                      (content "width=device-width, initial-scale=1, shrink-to-fit=no")))
-            (link (@ (rel "icon") (type "image/png") (href "/img/favicon.png")))
+			(meta (@ (property "og:title")
+					 (content ,og-title)))
+			(meta (@ (property "og:type")
+					 (content ,og-type)))
+			(meta (@ (property "og:image")
+					 (content "assets/img/vida-em-8-bits.png")))
+			(meta (@ (property "og:url")
+					 (content ,og-url)))
+			(link (@ (rel "icon") (type "image/png") (href "/img/favicon.png")))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/iosevka-aile/iosevka-aile.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/jetbrains-mono/jetbrains-mono.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/css/code.css"))))
@@ -101,27 +109,23 @@
                        (src "//static.getclicky.com/js"))
                     ;; Empty string to cause a closing </script> tag
                     "")
-            ,(when head-extra head-extra)
             (title ,(concat title " - Vida em 8 Bits")))
-           (body ,@(unless exclude-header
-                     (dw/site-header))
+           (body (dw/site-header)
                  (div (@ (class "container"))
                       (div (@ (class "site-post"))
-                           (h1 (@ (class "site-post-title"))
-                               ,title)
+                           (h1 (@ (class "site-post-title")) ,title)
                            ,(when publish-date
                               `(p (@ (class "site-post-meta")) ,publish-date))
-                           ,(when pre-content pre-content)
-                           (div (@ (id "content"))
-                                ,content)))
-                 ,@(unless exclude-footer
-                     (dw/site-footer)))))))
+                           (div (@ (id "content")) ,content)))
+                     (dw/site-footer))))))
 
 (defun dw/org-html-template (contents info)
-  (dw/generate-page (org-export-data (plist-get info :title) info)
-                    contents
-                    info
-                    :publish-date (org-export-data (org-export-get-date info "%B %e, %Y") info)))
+  (message "=> %s" (plist-get info :title))
+  (dw/generate-page
+   (org-export-data (plist-get info :title) info)
+   contents
+   info
+   :publish-date (org-export-data (org-export-get-date info "%B %e, %Y") info)))
 
 (defun get-article-output-path (org-file pub-dir)
   (let ((article-dir (concat pub-dir
@@ -144,19 +148,26 @@
      (with-current-buffer standard-output
        (vc-git-command t nil nil "rev-parse" "--short" "HEAD")))))
 
-(defun org-html-publish-to-html (plist filename pub-dir)
-  "Publish an org file to HTML, using the FILENAME as the output directory."
-  (let ((article-path (get-article-output-path filename pub-dir)))
+(defun org-html-publish-to-html (plist filepath pub-dir)
+  "Publish an org file to HTML, using the FILEPATH as the output directory."
+  (let ((article-path (get-article-output-path filepath pub-dir))
+		(filename (file-name-nondirectory filepath)))
+
+	(setq og-title (or (org-get-title filepath) "blog"))
+	(setq og-type (if (string-match-p "/posts/" filepath) "article" "website"))
+	(setq og-url (if (string= filename "index.org")
+					 "https://vidaem8bits.com"
+				   (concat "https://vidaem8bits.com/" (car (split-string filename ".org")))))
+	
     (cl-letf (((symbol-function 'org-export-output-file-name)
                (lambda (extension &optional subtreep pub-dir)
                  ;; The 404 page is a special case, it must be named "404.html"
                  (concat article-path
-                         (if (string= (file-name-nondirectory filename) "404.org") "404" "index")
+                         (if (string= filename "404.org") "404" "index")
                          extension))))
-      (org-publish-org-to 'site-html
-                          filename
-                          (concat "." (or (plist-get plist :html-extension)
-                                          "html"))
+	  (org-publish-org-to 'site-html
+                          filepath
+                          (concat "." (or (plist-get plist :html-extension) "html"))
                           plist
                           article-path))))
 
