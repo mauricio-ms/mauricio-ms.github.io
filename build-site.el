@@ -97,6 +97,8 @@
 					 (content ,(concat dw/site-url "/img/vida-em-8-bits.png"))))
 			(meta (@ (property "og:url")
 					 (content ,og-url)))
+			(meta (@ (property "og:description")
+					 (content "Here is the description.")))
 			(link (@ (rel "icon") (type "image/png") (href "/img/favicon.png")))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/iosevka-aile/iosevka-aile.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/jetbrains-mono/jetbrains-mono.css"))))
