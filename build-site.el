@@ -108,14 +108,14 @@
                     ;; Empty string to cause a closing </script> tag
                     "")
             (title ,(concat title " - Vida em 8 Bits")))
-           (body (dw/site-header)
+           (body ,@(dw/site-header)
                  (div (@ (class "container"))
                       (div (@ (class "site-post"))
                            (h1 (@ (class "site-post-title")) ,title)
                            ,(when publish-date
                               `(p (@ (class "site-post-meta")) ,publish-date))
                            (div (@ (id "content")) ,content)))
-                     (dw/site-footer))))))
+                     ,@(dw/site-footer))))))
 
 (defun dw/org-html-template (contents info)
   (dw/generate-page
