@@ -107,7 +107,7 @@
                        (src "//static.getclicky.com/js"))
                     ;; Empty string to cause a closing </script> tag
                     "")
-            (title ,(concat title " - Vida em 8 Bits")))
+            (title ,(blog-title title)))
            (body ,@(dw/site-header)
                  (div (@ (class "container"))
                       (div (@ (class "site-post"))
@@ -117,12 +117,15 @@
                            (div (@ (id "content")) ,content)))
                      ,@(dw/site-footer))))))
 
+(defun blog-title (title)
+  (if (string-empty-p title)
+	  "Vida em 8 Bits"
+	(concat title " - Vida em 8 Bits")))
+
 (defun dw/org-html-template (contents info)
   (dw/generate-page
-   (or
-	(substring-no-properties
-	 (org-export-data (plist-get info :title) info))
-	"Blog") ;; FIXME
+   (substring-no-properties
+	(org-export-data (plist-get info :title) info))
    contents
    info
    :publish-date (org-export-data (org-export-get-date info "%B %e, %Y") info)))
