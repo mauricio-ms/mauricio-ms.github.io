@@ -94,7 +94,7 @@
 			(meta (@ (property "og:type")
 					 (content ,og-type)))
 			(meta (@ (property "og:image")
-					 (content ,(concat dw/site-url "/img/vida-em-8-bits.png"))))
+					 (content ,(concat dw/site-url "/img/vida-em-8-bits-banner.png"))))
 			(meta (@ (property "og:image:width")
 					 (content "1272")))
 			(meta (@ (property "og:image:height")
