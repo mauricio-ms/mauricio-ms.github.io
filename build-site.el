@@ -94,7 +94,7 @@
 			(meta (@ (property "og:type")
 					 (content ,og-type)))
 			(meta (@ (property "og:image")
-					 (content ,(concat dw/site-url "img/vida-em-8-bits.png"))))
+					 (content ,(concat dw/site-url "/img/vida-em-8-bits.png"))))
 			(meta (@ (property "og:url")
 					 (content ,og-url)))
 			(link (@ (rel "icon") (type "image/png") (href "/img/favicon.png")))
