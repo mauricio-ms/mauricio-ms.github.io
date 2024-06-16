@@ -30,8 +30,6 @@
   :ensure t)
 
 ;; OpenGraph variables
-(defvar og-title nil
-  "Variable to control the OpenGraph page title.")
 (defvar og-type nil
   "Variable to control the OpenGraph page type.")
 (defvar og-url nil
@@ -92,7 +90,7 @@
             (meta (@ (name "viewport")
                      (content "width=device-width, initial-scale=1, shrink-to-fit=no")))
 			(meta (@ (property "og:title")
-					 (content ,og-title)))
+					 (content ,title)))
 			(meta (@ (property "og:type")
 					 (content ,og-type)))
 			(meta (@ (property "og:image")
@@ -120,9 +118,11 @@
                      (dw/site-footer))))))
 
 (defun dw/org-html-template (contents info)
-  (message "=> %s" (plist-get info :title))
   (dw/generate-page
-   (org-export-data (plist-get info :title) info)
+   (or
+	(substring-no-properties
+	 (org-export-data (plist-get info :title) info))
+	"Blog") ;; FIXME
    contents
    info
    :publish-date (org-export-data (org-export-get-date info "%B %e, %Y") info)))
@@ -153,7 +153,6 @@
   (let ((article-path (get-article-output-path filepath pub-dir))
 		(filename (file-name-nondirectory filepath)))
 
-	(setq og-title (or (org-get-title filepath) "blog"))
 	(setq og-type (if (string-match-p "/posts/" filepath) "article" "website"))
 	(setq og-url (if (string= filename "index.org")
 					 "https://vidaem8bits.com"
