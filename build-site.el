@@ -51,7 +51,7 @@
       make-backup-files nil)
 
 (defvar dw/site-url (if (string-equal (getenv "CI") "true")
-                        "https://mauricio-ms.github.io" ;;"https://vidaem8bits.com"
+                        "https://vidaem8bits.com"
                       "http://localhost:8080")
   "The URL for the site being generated.")
 
