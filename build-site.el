@@ -93,8 +93,6 @@
 				  (content "664")))
 		`(meta (@ (property "og:url")
 				  (content ,og-url)))
-		`(meta (@ (property "og:description")
-				  (content ,og-description)))
 		(if (equal og-type "article")
 			`(meta (@ (property "article:section")
 					  (content "blog"))))))
