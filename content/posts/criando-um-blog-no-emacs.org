@@ -117,7 +117,8 @@ Podemos querer modificar o estilo do blog como um todo para adicionar cabeçalho
 a função =generate-page= está super simplificada para dar o entendimento do essencial, contém alguns parâmetros não utilizados para demonstrar como dados podem ser extraídos para serem utilizados na geração do *html*. Além disso, demonstra como adicionar scripts ou arquivos CSS. As funções =site-header= e =site-buffer= foram omitidas por questões de brevidade, mas como seus nomes indicam, são funções para gerar o cabeçalho e o rodapé do blog, devem retornar templates dos elementos *html* no formato:
 
 #+begin_src emacs-lisp
-  (list `())
+    (list `(element1)
+          `(element2))
 #+end_src
 
 * Melhorando o visual

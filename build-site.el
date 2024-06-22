@@ -74,11 +74,36 @@
                  (div (@ (class "container"))
                       (p "Fique a vontade para me enviar um email: ms -dot- mauricio93 -at- gmail -dot- com")))))
 
+(defun og-tags (title og-description)
+  (list `(meta (@ (property "og:locale")
+				  (content "pt_BR")))
+		`(meta (@ (property "og:site_name")
+				  (content "Vida em 8 Bits")))
+		`(meta (@ (property "og:title")
+				  (content ,title)))
+		`(meta (@ (property "og:type")
+				  (content ,og-type)))
+		`(meta (@ (property "og:image")
+				  (content ,(concat dw/site-url "/img/vida-em-8-bits-banner.png"))))
+		`(meta (@ (property "og:image:secure_url")
+				  (content ,(concat dw/site-url "/img/vida-em-8-bits-banner.png"))))
+		`(meta (@ (property "og:image:width")
+				  (content "1272")))
+		`(meta (@ (property "og:image:height")
+				  (content "664")))
+		`(meta (@ (property "og:url")
+				  (content ,og-url)))
+		`(meta (@ (property "og:description")
+				  (content ,og-description)))
+		(if (equal og-type "article")
+			`(meta (@ (property "article:section")
+					  (content "blog"))))))
+
 (org-export-define-derived-backend 'site-html 'html
   :translate-alist
   '((template . dw/org-html-template)))
 
-(cl-defun dw/generate-page (title content info &key (publish-date))
+(cl-defun dw/generate-page (title content info &key (og-description) (publish-date))
   (concat
    "<!-- Generated from " (dw/get-commit-hash)  " on " (format-time-string "%Y-%m-%d @ %H:%M") " with " org-export-creator-string " -->\n"
    "<!DOCTYPE html>"
@@ -89,20 +114,7 @@
             (meta (@ (author "Vida em 8 Bits - Maurício Mussatto Scopel")))
             (meta (@ (name "viewport")
                      (content "width=device-width, initial-scale=1, shrink-to-fit=no")))
-			(meta (@ (property "og:title")
-					 (content ,title)))
-			(meta (@ (property "og:type")
-					 (content ,og-type)))
-			(meta (@ (property "og:image")
-					 (content ,(concat dw/site-url "/img/vida-em-8-bits-banner.png"))))
-			(meta (@ (property "og:image:width")
-					 (content "1272")))
-			(meta (@ (property "og:image:height")
-					 (content "664")))
-			(meta (@ (property "og:url")
-					 (content ,og-url)))
-			(meta (@ (property "og:description")
-					 (content "Here is the description.")))
+			,@(og-tags title og-description)
 			(link (@ (rel "icon") (type "image/png") (href "/img/favicon.png")))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/iosevka-aile/iosevka-aile.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/jetbrains-mono/jetbrains-mono.css"))))
@@ -124,6 +136,7 @@
                      ,@(dw/site-footer))))))
 
 (defun blog-title (title)
+  "Generate blog title tag from TITLE."
   (if (string-empty-p title)
 	  "Vida em 8 Bits"
 	(concat title " - Vida em 8 Bits")))
@@ -134,7 +147,12 @@
 	(org-export-data (plist-get info :title) info))
    contents
    info
+   :og-description nil ;; use (org-property "description") when needed
    :publish-date (org-export-data (org-export-get-date info "%B %e, %Y") info)))
+
+(defun org-property (key)
+  "Get org property KEY."
+  (car (cdr (car (org-collect-keywords '(key))))))
 
 (defun get-article-output-path (org-file pub-dir)
   (let ((article-dir (concat pub-dir
