@@ -50,9 +50,6 @@
       org-export-with-toc nil
       make-backup-files nil)
 
-(set-locale-environment "pt_BR.UTF-8")
-(setq system-time-locale "pt_BR.UTF-8")
-
 (defvar dw/site-url (if (string-equal (getenv "CI") "true")
                         "https://vidaem8bits.com"
                       "http://localhost:8080")
@@ -150,8 +147,6 @@
    info
    :og-description nil ;; use (org-property "description") when needed
    :publish-date (org-export-data (org-export-get-date info "%e de %B, %Y") info)))
-
-(message ">>>>>>>>>>>>> %s" (format-time-string "%e de %B, %Y"))
 
 (defun org-property (key)
   "Get org property KEY."
