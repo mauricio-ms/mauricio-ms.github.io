@@ -1,7 +1,7 @@
 #+TITLE: Criando um blog no Emacs
 #+DATE: <2024-06-23>
 
-Um blog é nada mais do que uma porção de páginas *html* estáticas, no entanto escrever texto em *html* puro não é uma experiência agrádavel. Usuários de [[https://www.gnu.org/software/emacs/][Emacs]] estão acostumados a utilizar o [[https://orgmode.org/https://orgmode.org/][Org Mode]] para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos *.org* como páginas *html*.
+Um blog é nada mais do que uma porção de páginas *html* estáticas, no entanto escrever texto em *html* puro não é uma experiência agrádavel. Usuários de [[https://www.gnu.org/software/emacs/][Emacs]] estão acostumados a utilizar o [[https://orgmode.org/][Org Mode]] para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos *.org* como páginas *html*.
 
 O intuito deste post é demonstrar os passos necessários para a configuração do sistema de publicação do Org Mode visando a criação de um blog. Para facilitar o entendimento, algumas configurações serão suprimidas, você pode encontrar o exemplo completo do blog Vida em 8 Bits no meu [[https://github.com/mauricio-ms/mauricio-ms.github.io][GitHub]].
 
