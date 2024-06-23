@@ -151,6 +151,8 @@
    :og-description nil ;; use (org-property "description") when needed
    :publish-date (org-export-data (org-export-get-date info "%e de %B, %Y") info)))
 
+(message ">>>>>>>>>>>>> %s" (format-time-string "%e de %B, %Y"))
+
 (defun org-property (key)
   "Get org property KEY."
   (car (cdr (car (org-collect-keywords '(key))))))
