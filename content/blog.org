@@ -1,3 +1,6 @@
 ** [[../criando-um-blog-no-emacs][Criando um blog no Emacs]]
 
 23 de junho, 2024 por Maurício Mussatto Scopel
+** [[../test1][Criando um blog no Emacs]]
+
+23 de junho, 2024 por Maurício Mussatto Scopel
