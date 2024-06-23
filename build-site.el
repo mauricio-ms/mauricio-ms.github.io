@@ -50,6 +50,8 @@
       org-export-with-toc nil
       make-backup-files nil)
 
+(set-language-environment "Brazilian Portuguese")
+
 (defvar dw/site-url (if (string-equal (getenv "CI") "true")
                         "https://vidaem8bits.com"
                       "http://localhost:8080")
