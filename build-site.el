@@ -51,6 +51,7 @@
       make-backup-files nil)
 
 (set-locale-environment "pt_BR.UTF-8")
+(setq system-time-locale "pt_BR.UTF-8")
 
 (defvar dw/site-url (if (string-equal (getenv "CI") "true")
                         "https://vidaem8bits.com"
