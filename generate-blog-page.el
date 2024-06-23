@@ -17,17 +17,18 @@
 (require 'use-package)
 
 (require 'org)
-(require 'vc-git)
-
-(defun get-commit-date (filepath)
-  (string-trim-right
-   (with-output-to-string
-	 (with-current-buffer standard-output
-	   (vc-git-command t nil nil "log" "--max-count=1" "--date=short" "--format=%cd" filepath)))))
 
 (defun parse-date (date)
   "Parse DATE to dd de mm, yyyy."
   (format-time-string "%d de %B, %Y" date))
+
+(defun org-get-date (file)
+  "Extract the DATE property from an org mode FILE."
+  (with-current-buffer (find-file-noselect file)
+    (goto-char (point-min))
+    (when (re-search-forward "^#\\+DATE: \\(.*\\)$" nil t)
+	  (substring-no-properties
+	   (match-string 1)))))
 
 (with-temp-file "content/blog.org"
   (let ((posts-folder "./content/posts/"))
@@ -39,5 +40,5 @@
 	   (insert (format "%s por Maurício Mussatto Scopel\n"
 					   (parse-date
 						(date-to-time
-						 (get-commit-date (concat posts-folder post)))))))
+						 (org-get-date (concat posts-folder post)))))))
 	 (directory-files posts-folder nil ".org"))))

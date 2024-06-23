@@ -146,7 +146,7 @@
    contents
    info
    :og-description nil ;; use (org-property "description") when needed
-   :publish-date (org-export-data (org-export-get-date info "%B %e, %Y") info)))
+   :publish-date (org-export-data (org-export-get-date info "%e de %B, %Y") info)))
 
 (defun org-property (key)
   "Get org property KEY."
