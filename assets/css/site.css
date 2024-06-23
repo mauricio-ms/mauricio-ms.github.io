@@ -339,11 +339,12 @@ strong {
   margin-top: 1rem;
   color: #ffffff;
   font-size: 1rem;
-  background-color: rgba(28, 31, 38, 0.5);
   border-top: 0.05rem solid #feff01;
   bottom: 0;
   width: 100%;
   text-align: center;
+  background-color: #1c1f2680;
+  box-shadow: 0 100vh 0 100vh #1c1f2680;
 }
 
 .site-footer p:last-child {
