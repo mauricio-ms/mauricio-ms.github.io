@@ -209,7 +209,7 @@
 			'("blog:posts"
               :base-directory "./content/posts"
               :base-extension "org"
-              :publishing-directory "./public"
+              :publishing-directory "./public/blog"
               :publishing-function org-html-publish-to-html
               :with-title nil
               :with-timestamps nil)

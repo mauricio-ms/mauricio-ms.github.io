@@ -34,7 +34,7 @@
   (let ((posts-folder "./content/posts/"))
 	(seq-do
 	 (lambda (post)
-	   (insert (format "** [[../%s][%s]]\n\n"
+	   (insert (format "** [[../blog/%s][%s]]\n\n"
 					   (car (string-split post ".org"))
 					   (org-get-title (concat posts-folder post))))
 	   (insert (format "%s por Maurício Mussatto Scopel\n"

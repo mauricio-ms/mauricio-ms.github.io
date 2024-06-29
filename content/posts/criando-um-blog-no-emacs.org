@@ -1,5 +1,5 @@
 #+TITLE: Criando um blog no Emacs
-#+DATE: <2024-06-23>
+#+DATE: <2024-06-29>
 
 Um blog é nada mais do que uma porção de páginas *html* estáticas, no entanto escrever texto em *html* puro não é uma experiência agradável. Usuários de [[https://www.gnu.org/software/emacs/][Emacs]] estão acostumados a utilizar o [[https://orgmode.org/][Org Mode]] para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos *.org* como páginas *html*.
 
@@ -104,8 +104,8 @@ Podemos querer modificar o estilo do blog como um todo para adicionar cabeçalho
               (meta (@ (name "viewport")
                        (content "width=device-width, initial-scale=1, shrink-to-fit=no")))
               (link (@ (rel "icon") (type "image/png") (href "/img/favicon.png"))) 
-              (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/css/code.css"))))
-              (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/css/site.css"))))
+              (link (@ (rel "stylesheet") (href ,(concat site-url "/css/code.css"))))
+              (link (@ (rel "stylesheet") (href ,(concat site-url "/css/site.css"))))
               (title ,(concat title " - Vida em 8 Bits")))
              (body (site-header)
                    (div (@ (class "container"))
@@ -176,7 +176,6 @@ Para acessar seu blog localmente você pode utilizar o pacote [[https://github.c
 Todo blog tem uma página listando todos os posts pela data mais recente. Bem, isso é simples de resolver, basta automatizar a geração de uma página *.org* contendo a listagem dos posts, o sistema de publicação tomará conta do restante. O primeiro passo é adicionar uma propriedade de data aos seus posts:
 
 #+begin_src org
-  #+TITLE: Criando um blog no Emacs
   #+DATE: <2024-06-29>
   ...
 #+end_src
