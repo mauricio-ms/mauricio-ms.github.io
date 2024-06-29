@@ -1,3 +1,3 @@
-#+title: Page Not Found
+#+title: Página não encontrada
 
-The page you requested was not found.
+A página que você requisitou não foi encontrada.
