@@ -1,6 +1,6 @@
-<!-- Generated from a8622be on 2024-06-23 @ 17:45 with Emacs 27.1 (Org mode 9.3) -->
+<!-- Generated from 1ddbde2 on 2024-06-29 @ 18:07 with Emacs 27.1 (Org mode 9.3) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Criando um blog no Emacs"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/criando-um-blog-no-emacs"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Criando um blog no Emacs - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Criando um blog no Emacs</h1><p class="site-post-meta">23 de junho, 2024</p><div id="content"><p>
-Um blog é nada mais do que uma porção de páginas <b>html</b> estáticas, no entanto escrever texto em <b>html</b> puro não é uma experiência agrádavel. Usuários de <a href="https://www.gnu.org/software/emacs/">Emacs</a> estão acostumados a utilizar o <a href="https://orgmode.org/">Org Mode</a> para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos <b>.org</b> como páginas <b>html</b>.
+Um blog é nada mais do que uma porção de páginas <b>html</b> estáticas, no entanto escrever texto em <b>html</b> puro não é uma experiência agradável. Usuários de <a href="https://www.gnu.org/software/emacs/">Emacs</a> estão acostumados a utilizar o <a href="https://orgmode.org/">Org Mode</a> para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos <b>.org</b> como páginas <b>html</b>.
 </p>
 
 <p>
@@ -37,7 +37,7 @@ A configuração é toda realizada através da variável <code>org-publish-proje
 </div>
 
 <p>
-neste exemplo podemos ver a configração de dois items - <code>blog:main</code> e <code>blog:assets</code> - que representam as páginas do blog e os <i>assets</i> como imagens e arquivos CSS. Cada item realiza a configuração por meio de atributos:
+neste exemplo podemos ver a configuração de dois items - <code>blog:main</code> e <code>blog:assets</code> - que representam as páginas do blog e os <i>assets -</i> como imagens e arquivos CSS. Cada item realiza a configuração por meio de atributos:
 </p>
 <ul class="org-ul">
 <li><code>:base-directory</code> - Define o diretório de origem onde os arquivos estão localizados no seu sistema de arquivos.</li>
@@ -100,9 +100,9 @@ o mesmo vale para recursos como imagens:
 Para facilitar a adição de links, basta executar <code>C-c c-l</code> e interativamente informar o link e a descrição.
 </p>
 
-<div id="outline-container-org072dfc5" class="outline-2">
-<h2 id="org072dfc5"><a href="#org072dfc5">Adicionando cabeçalho e rodapé</a></h2>
-<div class="outline-text-2" id="text-org072dfc5">
+<div id="outline-container-org90d1cd0" class="outline-2">
+<h2 id="org90d1cd0"><a href="#org90d1cd0">Adicionando cabeçalho e rodapé</a></h2>
+<div class="outline-text-2" id="text-org90d1cd0">
 <p>
 Podemos querer modificar o estilo do blog como um todo para adicionar cabeçalho e rodapé em todas as páginas. Para isso podemos sobreescrever o <i>exporter</i> de <b>html</b> do Org Mode:
 </p>
@@ -163,9 +163,9 @@ a função <code>generate-page</code> está super simplificada para dar o entend
 </div>
 </div>
 
-<div id="outline-container-org75b56d7" class="outline-2">
-<h2 id="org75b56d7"><a href="#org75b56d7">Melhorando o visual</a></h2>
-<div class="outline-text-2" id="text-org75b56d7">
+<div id="outline-container-orga995ef8" class="outline-2">
+<h2 id="orga995ef8"><a href="#orga995ef8">Melhorando o visual</a></h2>
+<div class="outline-text-2" id="text-orga995ef8">
 <p>
 Para um bom visual do seu blog, a instalação do pacote <code>htmlize</code> é essencial se você deseja utilizar blocos de código. O restante do <code>html</code> gerado pode ser customizado por meio de variáveis:
 </p>
@@ -189,14 +189,14 @@ Para um bom visual do seu blog, a instalação do pacote <code>htmlize</code> é
 </div>
 
 <p>
-para compreender o objetivo de cada variável execute <code>M-x describe-variable</code> ou use o atalho <code>C-h v</code> e digite o nome da variável.
+para compreender o objetivo de cada variável, execute <code>M-x describe-variable</code> ou use o atalho <code>C-h v</code> e em seguida digite o nome da variável.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge9863fa" class="outline-2">
-<h2 id="orge9863fa"><a href="#orge9863fa">Organizando o download de pacotes</a></h2>
-<div class="outline-text-2" id="text-orge9863fa">
+<div id="outline-container-org0af1d4c" class="outline-2">
+<h2 id="org0af1d4c"><a href="#org0af1d4c">Organizando o download de pacotes</a></h2>
+<div class="outline-text-2" id="text-org0af1d4c">
 <p>
 Para evitar que pacotes obtidos na execução do script sejam instalados no seu diretório de configuração principal do Emacs, basta atualizar o valor da variável <code>package-user-dir</code> para apontar para um diretório oculto como por exemplo <code>.packages</code>:
 </p>
@@ -222,20 +222,31 @@ Para evitar que pacotes obtidos na execução do script sejam instalados no seu 
 </div>
 </div>
 
-<div id="outline-container-org17bfb07" class="outline-2">
-<h2 id="org17bfb07"><a href="#org17bfb07">Acessando o blog</a></h2>
-<div class="outline-text-2" id="text-org17bfb07">
+<div id="outline-container-org32fd74a" class="outline-2">
+<h2 id="org32fd74a"><a href="#org32fd74a">Acessando o blog</a></h2>
+<div class="outline-text-2" id="text-org32fd74a">
 <p>
 Para acessar seu blog localmente você pode utilizar o pacote <a href="https://github.com/skeeto/emacs-web-server">simple-httpd</a> para subir um servidor local, após a instalação do pacote basta executar <code>M-x httpd-serve-directory</code>, selecionar o diretório de publicação e então acessar o blog via <a href="http://localhost:8080">http://localhost:8080</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc7eaeb8" class="outline-2">
-<h2 id="orgc7eaeb8"><a href="#orgc7eaeb8">Criando a listagem de posts</a></h2>
-<div class="outline-text-2" id="text-orgc7eaeb8">
+<div id="outline-container-org2fb1eff" class="outline-2">
+<h2 id="org2fb1eff"><a href="#org2fb1eff">Criando a listagem de posts</a></h2>
+<div class="outline-text-2" id="text-org2fb1eff">
 <p>
-Todo blog tem uma página listando todos os posts pela data mais recente. Bem, isso é simples de resolver, basta automatizar a geração de uma página <b>.org</b> contendo a listagem dos posts e o sistema de publicação tomará conta do restante. O código em Emacs Lisp abaixo resolve isso de forma simples:
+Todo blog tem uma página listando todos os posts pela data mais recente. Bem, isso é simples de resolver, basta automatizar a geração de uma página <b>.org</b> contendo a listagem dos posts, o sistema de publicação tomará conta do restante. O primeiro passo é adicionar uma propriedade de data aos seus posts:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span class="org-org-document-info-keyword">#+TITLE:</span> <span class="org-org-document-title">Criando um blog no Emacs</span>
+<span class="org-org-document-info-keyword">#+DATE:</span> <span class="org-org-document-info">&lt;2024-06-29&gt;</span>
+...
+</pre>
+</div>
+
+<p>
+Por fim, basta um simples script em Emacs Lisp para resolver o problema que:
 </p>
 
 <ul class="org-ul">
@@ -243,35 +254,36 @@ Todo blog tem uma página listando todos os posts pela data mais recente. Bem, i
 <li>Para cada post:
 <ul class="org-ul">
 <li>Insere uma linha com o respectivo link no qual a descrição é o título extraído do documento <b>.org</b>;</li>
-<li>Insere uma linha identificando o autor do blog e a data de publicação, obtida pela data de commit do arquivo.</li>
+<li>Insere uma linha identificando o autor do blog e a data de publicação - obtida pelo atributo de data no arquivo.</li>
 </ul></li>
 </ul>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">org</span>)
-(<span class="org-keyword">require</span> '<span class="org-constant">vc-git</span>)
-
-(<span class="org-keyword">defun</span> <span class="org-function-name">get-commit-date</span> (filepath)
-  (string-trim-right
-   (<span class="org-keyword">with-output-to-string</span>
-     (<span class="org-keyword">with-current-buffer</span> standard-output
-       (vc-git-command t nil nil <span class="org-string">"log"</span> <span class="org-string">"--max-count=1"</span> <span class="org-string">"--date=short"</span> <span class="org-string">"--format=%cd"</span> filepath)))))
 
 (<span class="org-keyword">defun</span> <span class="org-function-name">parse-date</span> (date)
   <span class="org-doc">"Parse DATE to dd de mm, yyyy."</span>
   (format-time-string <span class="org-string">"%d de %B, %Y"</span> date))
 
+(<span class="org-keyword">defun</span> <span class="org-function-name">org-get-date</span> (file)
+  <span class="org-doc">"Extract the DATE property from an org mode FILE."</span>
+  (<span class="org-keyword">with-current-buffer</span> (find-file-noselect file)
+    (goto-char (point-min))
+    (<span class="org-keyword">when</span> (re-search-forward <span class="org-string">"^#\\+DATE: </span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">.*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">$"</span> nil t)
+      (substring-no-properties
+       (match-string 1)))))
+
 (<span class="org-keyword">with-temp-file</span> <span class="org-string">"content/blog.org"</span>
   (<span class="org-keyword">let</span> ((posts-folder <span class="org-string">"./content/posts/"</span>))
     (seq-do
      (<span class="org-keyword">lambda</span> (post)
-       (insert (format <span class="org-string">"[[../%s][%s]]\n\n"</span>
+       (insert (format <span class="org-string">"** [[../%s][%s]]\n\n"</span>
                        (car (string-split post <span class="org-string">".org"</span>))
                        (org-get-title (concat posts-folder post))))
        (insert (format <span class="org-string">"%s por Maur&#237;cio Mussatto Scopel\n"</span>
                        (parse-date
                         (date-to-time
-                         (get-commit-date (concat posts-folder post)))))))
+                         (org-get-date (concat posts-folder post)))))))
      (directory-files posts-folder nil <span class="org-string">".org"</span>))))
 </pre>
 </div>
