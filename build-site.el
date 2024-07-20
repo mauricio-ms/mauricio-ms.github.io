@@ -212,9 +212,15 @@ Delegate PLIST properties to the site-html backend."
               :base-directory "./content/posts"
               :base-extension "org"
               :publishing-directory "./public/blog"
-              :publishing-function org-html-publish-to-html
+			  :publishing-function org-html-publish-to-html
               :with-title nil
               :with-timestamps nil)
+			'("blog:posts:assets"
+              :base-directory "./content/posts"
+              :base-extension "png\\|jpg\\|gif"
+              :publishing-directory "./public/blog"
+			  :recursive t
+			  :publishing-function org-publish-attachment)
 			'("blog:assets"
               :base-directory "./assets"
               :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|woff2\\|ttf"
