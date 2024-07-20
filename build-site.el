@@ -154,19 +154,20 @@
   "Get org property KEY."
   (car (cdr (car (org-collect-keywords '(key))))))
 
-(defun get-article-output-path (org-file pub-dir)
-  (let ((article-dir (concat pub-dir
-                             (downcase
-                              (file-name-as-directory
-                               (file-name-sans-extension
-                                (file-name-nondirectory org-file)))))))
+(defun get-post-output-path (org-file pub-dir)
+  "Get post output path for ORG-FILE on PUB-DIR."
+  (let ((post-dir (concat pub-dir
+                          (downcase
+                           (file-name-as-directory
+                            (file-name-sans-extension
+                             (file-name-nondirectory org-file)))))))
 
     (if (string-match "\\/index.org\\|\\/404.org$" org-file)
         pub-dir
         (progn
-          (unless (file-directory-p article-dir)
-            (make-directory article-dir t))
-          article-dir))))
+          (unless (file-directory-p post-dir)
+            (make-directory post-dir t))
+          post-dir))))
 
 (defun dw/get-commit-hash ()
   "Get the short hash of the latest commit in the current repository."
@@ -176,26 +177,27 @@
        (vc-git-command t nil nil "rev-parse" "--short" "HEAD")))))
 
 (defun org-html-publish-to-html (plist filepath pub-dir)
-  "Publish an org file to HTML, using the FILEPATH as the output directory."
-  (let ((article-path (get-article-output-path filepath pub-dir))
+  "Publish an org file to HTML on PUB-DIR/FILEPATH.
+Delegate PLIST properties to the site-html backend."
+  (let ((post-path (get-post-output-path filepath pub-dir))
 		(filename (file-name-nondirectory filepath)))
 
 	(setq og-type (if (string-match-p "/posts/" filepath) "article" "website"))
 	(setq og-url (if (string= filename "index.org")
 					 "https://vidaem8bits.com"
 				   (concat "https://vidaem8bits.com/" (car (split-string filename ".org")))))
-	
+
     (cl-letf (((symbol-function 'org-export-output-file-name)
                (lambda (extension &optional subtreep pub-dir)
                  ;; The 404 page is a special case, it must be named "404.html"
-                 (concat article-path
+                 (concat post-path
                          (if (string= filename "404.org") "404" "index")
                          extension))))
 	  (org-publish-org-to 'site-html
                           filepath
                           (concat "." (or (plist-get plist :html-extension) "html"))
                           plist
-                          article-path))))
+                          post-path))))
 
 ;; Define the publishing project
 (setq org-publish-project-alist
