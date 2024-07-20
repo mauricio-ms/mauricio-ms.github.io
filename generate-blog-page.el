@@ -27,18 +27,30 @@
   (with-current-buffer (find-file-noselect file)
     (goto-char (point-min))
     (when (re-search-forward "^#\\+DATE: \\(.*\\)$" nil t)
-	  (substring-no-properties
-	   (match-string 1)))))
+	  (date-to-time
+	   (substring-no-properties
+		(match-string 1))))))
+
+(defun get-blog-posts (posts-folder)
+  "Get blog posts stored on POSTS-FOLDER."
+  (sort
+   (seq-map
+	(lambda (post)
+	  `(,post ,(org-get-date (concat posts-folder post))))
+	(directory-files posts-folder nil ".org"))
+   :key (lambda (v) (cdr v))
+   ;; most recent posts before
+   :reverse t))
 
 (with-temp-file "content/blog.org"
   (let ((posts-folder "./content/posts/"))
 	(seq-do
 	 (lambda (post)
-	   (insert (format "** [[../blog/%s][%s]]\n\n"
-					   (car (string-split post ".org"))
-					   (org-get-title (concat posts-folder post))))
-	   (insert (format "%s por Maurício Mussatto Scopel\n"
-					   (parse-date
-						(date-to-time
-						 (org-get-date (concat posts-folder post)))))))
-	 (directory-files posts-folder nil ".org"))))
+	   (let ((post-filename (car post))
+			 (post-publish-date (nth 1 post)))
+		 (insert (format "** [[../blog/%s][%s]]\n\n"
+						 (car (string-split post-filename ".org"))
+						 (org-get-title (concat posts-folder post-filename))))
+		 (insert (format "%s por Maurício Mussatto Scopel\n"
+						 (parse-date post-publish-date)))))
+	 (get-blog-posts posts-folder))))
