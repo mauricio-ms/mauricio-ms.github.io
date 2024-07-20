@@ -21,6 +21,8 @@ Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅.
 Tentei não perder muito tempo com esta etapa recorrendo a ferramentas online, mas não demorei muito para perceber um problema, dicionários são divididos em 2 colunas, e estas ferramentas não entendem isso. O texto é gerado considerando uma única coluna. Era preciso de alguma maneira realizar este processo de maneira diferente, para cada página, gerar o texto da coluna da esquerda e depois o da direita:
 
 #+DOWNLOADED: screenshot @ 2024-07-06 17:52:50
+#+CAPTION: Estrutura básica de um dicionário
+#+ATTR_HTML: :alt Estrutura básica de um dicionário
 [[file:digitalizando-um-dicionario-com-compiladores/Transformando_PDF_em_texto/2024-07-06_17-52-50_screenshot.png]]
 
 A biblioteca [[https://itextpdf.com/][iText]] permite realizar este processamento de forma muito simples, basta gerar áreas representando cada coluna para realizar a extração dos textos de forma separada. A classe em Java abaixo demonstra como realizar a conversão de um dicionário em PDF para um arquivo texto especificando os limites via constantes e as páginas de interesse via parâmetros do método /parse/:
@@ -154,6 +156,8 @@ Com uma visão geral de compildares, voltamo-nos agora ao dicionário. Obviament
 
 Para a criação da gramática é preciso identificar a estrutura do dicionário, vejamos um exemplo:
 #+DOWNLOADED: screenshot @ 2024-07-06 19:57:57
+#+CAPTION: Exemplo de uma entrada de um dicionário
+#+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário
 [[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png]]
 
 Estamos interessados em dois elementos: a palavra de origem e sua tradução. Do exemplo acima podemos extrair a seguinte estrutura:
@@ -215,6 +219,8 @@ Elementos como sexo e contexto não aparecem em todas as entradas do dicionário
 
 Com mais um exemplo podemos perceber que temos uma lista de traduções:
 #+DOWNLOADED: screenshot @ 2024-07-06 20:25:20
+#+CAPTION: Exemplo de uma entrada de um dicionário com múltiplas traduções
+#+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário com múltiplas traduções
 [[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-25-20_screenshot.png]]
 
 Podemos atender esse requisito com algumas modificações na gramática:
@@ -241,6 +247,8 @@ Com a gramática pronta podemos gerar o /parser/:
 
 Após a execução do comando, você terá a seguinte estrutura:
 #+DOWNLOADED: screenshot @ 2024-07-06 20:51:19
+#+CAPTION: Estrutura do projeto após a compilação da gramática
+#+ATTR_HTML: :alt Estrutura do projeto após a compilação da gramática
 [[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-51-19_screenshot.png]]
 
 De todos estes arquivos, o que nos interessa é a classe Java =EnPtDicionaryBaseVisitor=, é uma implementação padrão do /parser/. Para cada elemento da gramática temos um método na forma =visitElement(var cx)= que podemos sobreescrever:
