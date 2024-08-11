@@ -29,6 +29,8 @@
   :pin "melpa-stable"
   :ensure t)
 
+(use-package org)
+
 ;; OpenGraph variables
 (defvar og-type nil
   "Variable to control the OpenGraph page type.")
