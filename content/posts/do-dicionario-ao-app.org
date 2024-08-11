@@ -27,7 +27,7 @@ Tentei não perder muito tempo com esta etapa recorrendo a ferramentas online, m
 #+DOWNLOADED: screenshot @ 2024-07-06 17:52:50
 #+CAPTION: Estrutura básica de um dicionário
 #+ATTR_HTML: :alt Estrutura básica de um dicionário
-[[file:do-dicionario-ao-app/Transformando_PDF_em_texto/2024-07-06_17-52-50_screenshot.png]]
+[[file:Transformando_PDF_em_texto/2024-07-06_17-52-50_screenshot.png]]
 
 O texto é gerado considerando arquivos normais sem subdivisão em um mesma página. O que eu precisava era, para cada página, gerar o texto da coluna da esquerda e depois o da coluna da direita. A biblioteca [[https://itextpdf.com/][iText]] permite realizar este processamento de forma muito simples, basta definir áreas representando cada coluna para realizar a extração dos textos separadamente. A classe em Java abaixo demonstra como realizar a conversão de um dicionário em PDF para um arquivo texto especificando os limites via constantes e as páginas de interesse via parâmetros do método /convertToText/:
 
@@ -135,7 +135,7 @@ A /Syntax Tree/ do exemplo acima pode ser representada da seguinte forma:
 
 #+CAPTION: Exemplo de Syntax Tree
 #+ATTR_HTML: :alt Exemplo de Syntax Tree
-[[file:do-dicionario-ao-app/Estruturando_o_texto_em_um_mapa_de_traduções/assignment-example.png]]
+[[file:Estruturando_o_texto_em_um_mapa_de_traduções/assignment-example.png]]
 
 ** Analisador Semântico:
 O analisador semântico utiliza os dados armazendos na /Symbol table/ e a /Syntax Tree/ para analisar a consistência semântica do programa de acordo com a definição da linguagem na gramática. Esta etapa realiza tarefas como checagem de tipos e promoção de tipos - caso a linguagem sendo analisada permita.
@@ -144,7 +144,7 @@ Se a variável =rate= do exemplo fosse do tipo ponto flutuante, a /Syntax Tree/ 
 
 #+CAPTION: Exemplo de Syntax Tree com promoção de tipo
 #+ATTR_HTML: :alt Exemplo de Syntax Tree com promoção de tipo
-[[file:do-dicionario-ao-app/Estruturando_o_texto_em_um_mapa_de_traduções/assignment-type-promotion-example.png]]
+[[file:Estruturando_o_texto_em_um_mapa_de_traduções/assignment-type-promotion-example.png]]
 
 ** Geração de código intermediário:
 Com a /Syntax Tree/ pronta, é chegado o momento de produzir código em uma representação intermediária. Este código deve ser simples de produzir e de converter em código de máquina, de modo a simplificar e tornar eficientes os próximos componentes do compilador. Um tipo comum de representação intermediária é o código de três endereços: uma sequência de instruções /assembly-like/ com três operandos por instrução.
@@ -190,7 +190,7 @@ Para a criação da gramática, é preciso identificar a estrutura do dicionári
 #+DOWNLOADED: screenshot @ 2024-07-06 19:57:57
 #+CAPTION: Exemplo de uma entrada de um dicionário
 #+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário
-[[file:do-dicionario-ao-app/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png]]
+[[file:Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png]]
 
 Estamos interessados em dois elementos: a palavra de origem e sua tradução. Do exemplo acima podemos extrair a seguinte estrutura:
 
@@ -251,7 +251,7 @@ Com mais um exemplo, percebemos que uma palavra de tradução não é o suficent
 #+DOWNLOADED: screenshot @ 2024-07-06 20:25:20
 #+CAPTION: Exemplo de uma entrada de um dicionário com múltiplas traduções
 #+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário com múltiplas traduções
-[[file:do-dicionario-ao-app/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-25-20_screenshot.png]]
+[[file:Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-25-20_screenshot.png]]
 
 Podemos atender esse requisito com algumas modificações na gramática:
 #+begin_src antlr
@@ -279,7 +279,7 @@ Após a execução do comando, você terá a seguinte estrutura:
 #+DOWNLOADED: screenshot @ 2024-07-06 20:51:19
 #+CAPTION: Estrutura do projeto após a compilação da gramática
 #+ATTR_HTML: :alt Estrutura do projeto após a compilação da gramática
-[[file:do-dicionario-ao-app/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-51-19_screenshot.png]]
+[[file:Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-51-19_screenshot.png]]
 
 De todos estes arquivos, o que nos interessa é a classe Java =EnPtDicionaryBaseVisitor=, que é uma implementação padrão do /parser/. Para cada elemento da gramática temos um método com a assinatura =visitElement(var cx)= que podemos sobreescrever:
 
