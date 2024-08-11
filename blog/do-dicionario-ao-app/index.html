@@ -1,4 +1,4 @@
-<!-- Generated from f55ed74 on 2024-08-11 @ 18:13 with Emacs 31.0.50 (Org mode 9.7.9) -->
+<!-- Generated from 3f6dea0 on 2024-08-11 @ 18:15 with Emacs 31.0.50 (Org mode 9.7.9) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/blog/do-dicionario-ao-app/cover.jpg"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/blog/do-dicionario-ao-app/cover.jpg"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/do-dicionario-ao-app"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores</h1><p class="site-post-meta">11 de agosto, 2024</p><div id="content"><p>
 Neste post, lhes contarei a saga de como digitalizei o PDF de um dicionário para a criação de um App para o estudo de vocabulário utilizando compiladores.
 </p>
@@ -16,7 +16,7 @@ A maneira mais eficiente que encontrei de obter o significado de palavras durant
 <li>Adicionar a funcionalidade de treinamento:
 <ul class="org-ul">
 <li>Cada palavra pesquisada deve ser adicionada a uma lista de palavras para treinamento com um contador do número de pesquisas associado - para possibilitar a criação de uma lista de prioridade das palavras que mais tenho dificuldade;</li>
-<li>Na tela de treinamento, cada erro ou acerto deve atualizar o contador de erros daquela palavra até ao ponto em que a palavra possa ser removida da lista de treinamento.</li>
+<li>Na tela de treinamento, cada erro ou acerto deve atualizar o contador de erros daquela palavra até ao ponto em que possa ser removida da lista de treinamento.</li>
 </ul></li>
 </ul>
 
@@ -30,17 +30,17 @@ A implementação de um aplicativo como este é razoavelmente simples, basta obt
 </ul>
 
 <p>
-Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅. Não demorei muito para perceber que não era necessário a implementação de um sistema de tradução completo, mas de um simples dicionário, uma vez que quero realizar a tradução de palavras e não de sentenças completas. Esta constatação simplifica por ordens de grandeza o problema. Procurei por dicionários digitalizados na internet, mas não encontrei nada muito completo, era preciso digitalizar um dicionário. Este problema pode ser resolvido em duas etapas, converter o PDF do dicionário em texto, e a partir do texto gerar um mapa com a estrutura: <code>entrada do dicionário =&gt; lista de traduções</code>.
+Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅. Não demorei muito para perceber que não era necessário a implementação de um sistema de tradução completo, mas de um simples dicionário, uma vez que quero realizar a tradução de palavras e não de sentenças completas. Esta constatação simplifica por ordens de grandeza o problema. Procurei por dicionários digitalizados na internet, mas não encontrei nada muito completo, era preciso digitalizar um dicionário. Este problema pode ser resolvido em duas etapas: converter o PDF do dicionário em texto, e a partir do texto gerar um mapa com a estrutura: <code>entrada do dicionário =&gt; lista de traduções</code>.
 </p>
-<div id="outline-container-org95cec5b" class="outline-2">
-<h2 id="org95cec5b"><a href="#org95cec5b">Transformando PDF em texto</a></h2>
-<div class="outline-text-2" id="text-org95cec5b">
+<div id="outline-container-org956244a" class="outline-2">
+<h2 id="org956244a"><a href="#org956244a">Transformando PDF em texto</a></h2>
+<div class="outline-text-2" id="text-org956244a">
 <p>
 Tentei não perder muito tempo com esta etapa recorrendo a ferramentas online, mas não demorei muito para perceber um problema, dicionários são divididos em 2 colunas, e estas ferramentas não entendem isso:
 </p>
 
 
-<div id="org90954ee" class="figure">
+<div id="orgb91fbd0" class="figure">
 <p><img src="./Transformando_PDF_em_texto/2024-07-06_17-52-50_screenshot.png" alt="Estrutura básica de um dicionário" />
 </p>
 <p><span class="figure-number">Figura 1: </span>Estrutura básica de um dicionário</p>
@@ -92,9 +92,9 @@ O texto é gerado considerando arquivos normais sem subdivisão em um mesma pág
 </div>
 </div>
 </div>
-<div id="outline-container-orgab5ef2a" class="outline-2">
-<h2 id="orgab5ef2a"><a href="#orgab5ef2a">Estruturando o texto em um mapa de traduções</a></h2>
-<div class="outline-text-2" id="text-orgab5ef2a">
+<div id="outline-container-org1f8b30d" class="outline-2">
+<h2 id="org1f8b30d"><a href="#org1f8b30d">Estruturando o texto em um mapa de traduções</a></h2>
+<div class="outline-text-2" id="text-org1f8b30d">
 <p>
 É nesta etapa que a diversão começa. Dicionários tem uma estrutura muito bem definida e cientistas da computação sabem há décadas como analisar este tipo de texto: compiladores. Um exemplo disso são linguagens de programação, independente de qual você utilize, por trás dela sempre haverá um compilador ou um interpretador.
 </p>
@@ -156,9 +156,9 @@ Na gramática acima podemos visualizar os elementos de um objeto JSON:
 Com a gramática definida, o compilador precisa analisar o programa para garantir que este respeita a estrutura definida na gramática e realizar a tradução para a linguagem destino. Este trabalho é definido em um conjunto de componentes que vamos analisar brevemente com a ajuda do temido livro do dragão 🐉🔥 (Aho et al., 2006).
 </p>
 </div>
-<div id="outline-container-orgc6bc0c5" class="outline-3">
-<h3 id="orgc6bc0c5"><a href="#orgc6bc0c5">Analisador Léxico:</a></h3>
-<div class="outline-text-3" id="text-orgc6bc0c5">
+<div id="outline-container-orgfe60111" class="outline-3">
+<h3 id="orgfe60111"><a href="#orgfe60111">Analisador Léxico:</a></h3>
+<div class="outline-text-3" id="text-orgfe60111">
 <p>
 O analisador léxico é o primeiro componente de um compilador, ele é responsável pelo processamento do texto do programa na linguagem de origem. A saída deste componente é um conjunto de tokens na estrutura: <code>&lt;token,value&gt;</code>.
 </p>
@@ -180,9 +180,9 @@ Onde cada <code>token</code> é um símbolo abstrato e <code>value</code> aponta
 </p>
 </div>
 </div>
-<div id="outline-container-orgc823e46" class="outline-3">
-<h3 id="orgc823e46"><a href="#orgc823e46">Analisador Sintático:</a></h3>
-<div class="outline-text-3" id="text-orgc823e46">
+<div id="outline-container-org6508883" class="outline-3">
+<h3 id="org6508883"><a href="#org6508883">Analisador Sintático:</a></h3>
+<div class="outline-text-3" id="text-org6508883">
 <p>
 A partir dos tokens gerados pelo analisador léxico, o analisador sintático gera uma <i>Syntax Tree</i> para representar a estrutura do programa. <i>Syntax Tree's</i> são amplamente utilizadas por IDE's e editores de texto para apontarem erros de sintaxe.
 </p>
@@ -192,16 +192,16 @@ A <i>Syntax Tree</i> do exemplo acima pode ser representada da seguinte forma:
 </p>
 
 
-<div id="org2dc9026" class="figure">
+<div id="org96be834" class="figure">
 <p><img src="./Estruturando_o_texto_em_um_mapa_de_traduções/assignment-example.png" alt="Exemplo de Syntax Tree" />
 </p>
 <p><span class="figure-number">Figura 2: </span>Exemplo de Syntax Tree</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org2b367b0" class="outline-3">
-<h3 id="org2b367b0"><a href="#org2b367b0">Analisador Semântico:</a></h3>
-<div class="outline-text-3" id="text-org2b367b0">
+<div id="outline-container-orge1389b7" class="outline-3">
+<h3 id="orge1389b7"><a href="#orge1389b7">Analisador Semântico:</a></h3>
+<div class="outline-text-3" id="text-orge1389b7">
 <p>
 O analisador semântico utiliza os dados armazendos na <i>Symbol table</i> e a <i>Syntax Tree</i> para analisar a consistência semântica do programa de acordo com a definição da linguagem na gramática. Esta etapa realiza tarefas como checagem de tipos e promoção de tipos - caso a linguagem sendo analisada permita.
 </p>
@@ -211,16 +211,16 @@ Se a variável <code>rate</code> do exemplo fosse do tipo ponto flutuante, a <i>
 </p>
 
 
-<div id="orga6d67ca" class="figure">
+<div id="orgc343581" class="figure">
 <p><img src="./Estruturando_o_texto_em_um_mapa_de_traduções/assignment-type-promotion-example.png" alt="Exemplo de Syntax Tree com promoção de tipo" />
 </p>
 <p><span class="figure-number">Figura 3: </span>Exemplo de Syntax Tree com promoção de tipo</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org203a400" class="outline-3">
-<h3 id="org203a400"><a href="#org203a400">Geração de código intermediário:</a></h3>
-<div class="outline-text-3" id="text-org203a400">
+<div id="outline-container-org9031094" class="outline-3">
+<h3 id="org9031094"><a href="#org9031094">Geração de código intermediário:</a></h3>
+<div class="outline-text-3" id="text-org9031094">
 <p>
 Com a <i>Syntax Tree</i> pronta, é chegado o momento de produzir código em uma representação intermediária. Este código deve ser simples de produzir e de converter em código de máquina, de modo a simplificar e tornar eficientes os próximos componentes do compilador. Um tipo comum de representação intermediária é o código de três endereços: uma sequência de instruções <i>assembly-like</i> com três operandos por instrução.
 </p>
@@ -238,9 +238,9 @@ A representação em código de três endereços para o exemplo seria algo assim
 </div>
 </div>
 </div>
-<div id="outline-container-org19533a4" class="outline-3">
-<h3 id="org19533a4"><a href="#org19533a4">Otimização de código:</a></h3>
-<div class="outline-text-3" id="text-org19533a4">
+<div id="outline-container-org1a23684" class="outline-3">
+<h3 id="org1a23684"><a href="#org1a23684">Otimização de código:</a></h3>
+<div class="outline-text-3" id="text-org1a23684">
 <p>
 A partir da representação intermediária, inúmeras otimizações podem ser aplicadas de forma a tornar o código mais eficiente.
 </p>
@@ -256,9 +256,9 @@ Seguindo com o exemplo, o conjunto de instruções gerado na etapa anterior pode
 </div>
 </div>
 </div>
-<div id="outline-container-org0fabbb5" class="outline-3">
-<h3 id="org0fabbb5"><a href="#org0fabbb5">Geração de código:</a></h3>
-<div class="outline-text-3" id="text-org0fabbb5">
+<div id="outline-container-orgfdcfb19" class="outline-3">
+<h3 id="orgfdcfb19"><a href="#orgfdcfb19">Geração de código:</a></h3>
+<div class="outline-text-3" id="text-orgfdcfb19">
 <p>
 Com o código intermediário otimizado, é hora da geração do código na linguagem destino. Caso esta seja linguagem de máquina, o código gerado poderia ser um Assembly como este:
 </p>
@@ -281,9 +281,9 @@ Em cada operação:
 </ul>
 </div>
 </div>
-<div id="outline-container-org2912dd9" class="outline-3">
-<h3 id="org2912dd9"><a href="#org2912dd9">De volta ao dicionário</a></h3>
-<div class="outline-text-3" id="text-org2912dd9">
+<div id="outline-container-org7b08c04" class="outline-3">
+<h3 id="org7b08c04"><a href="#org7b08c04">De volta ao dicionário</a></h3>
+<div class="outline-text-3" id="text-org7b08c04">
 <p>
 Com uma visão geral de compiladores, voltemo-nos agora ao dicionário. Obviamente não criei um compilador do zero, utilizei ferramentas existentes para me auxiliar neste processo. Uma ferramenta muito conhecida no mundo Java é o <a href="https://www.antlr.org/">ANTLR</a>. O ANTRL permite a geração de <i>parsers</i> para a tradução, execução ou processamento de arquivos de texto estruturado ou binários. Tudo o que o ANTLR precisa é de uma gramática, a partir disso a ferramenta gera um <i>parser</i> baseado em <i>Design Patterns</i> como o <i>Visitor</i> que pode ser utilizado para a solução do problema, como por exemplo: gerar um mapa de traduções.
 </p>
@@ -292,7 +292,7 @@ Com uma visão geral de compiladores, voltemo-nos agora ao dicionário. Obviamen
 Para a criação da gramática, é preciso identificar a estrutura do dicionário, vejamos um exemplo:
 </p>
 
-<div id="org3b22b51" class="figure">
+<div id="org3bbb464" class="figure">
 <p><img src="./Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png" alt="Exemplo de uma entrada de um dicionário" />
 </p>
 <p><span class="figure-number">Figura 4: </span>Exemplo de uma entrada de um dicionário</p>
@@ -366,7 +366,7 @@ Elementos como sexo e contexto não aparecem em todas as entradas do dicionário
 Com mais um exemplo, percebemos que uma palavra de tradução não é o suficente, precisamos de uma lista de traduções, que é nada mais que palavras separadas por vírgula:
 </p>
 
-<div id="orge120ed3" class="figure">
+<div id="org26999e8" class="figure">
 <p><img src="./Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-25-20_screenshot.png" alt="Exemplo de uma entrada de um dicionário com múltiplas traduções" />
 </p>
 <p><span class="figure-number">Figura 5: </span>Exemplo de uma entrada de um dicionário com múltiplas traduções</p>
@@ -410,7 +410,7 @@ Com a gramática pronta podemos gerar o <i>parser</i>:
 Após a execução do comando, você terá a seguinte estrutura:
 </p>
 
-<div id="orgcc2b143" class="figure">
+<div id="org0add2a1" class="figure">
 <p><img src="./Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-51-19_screenshot.png" alt="Estrutura do projeto após a compilação da gramática" />
 </p>
 <p><span class="figure-number">Figura 6: </span>Estrutura do projeto após a compilação da gramática</p>
