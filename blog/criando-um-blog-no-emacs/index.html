@@ -1,4 +1,4 @@
-<!-- Generated from 14a1a65 on 2024-06-29 @ 19:01 with Emacs 27.1 (Org mode 9.3) -->
+<!-- Generated from 6ca3d28 on 2024-08-11 @ 02:37 with Emacs 27.1 (Org mode 9.3) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Criando um blog no Emacs"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/criando-um-blog-no-emacs"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Criando um blog no Emacs - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Criando um blog no Emacs</h1><p class="site-post-meta">29 de junho, 2024</p><div id="content"><p>
 Um blog é nada mais do que uma porção de páginas <b>html</b> estáticas, no entanto escrever texto em <b>html</b> puro não é uma experiência agradável. Usuários de <a href="https://www.gnu.org/software/emacs/">Emacs</a> estão acostumados a utilizar o <a href="https://orgmode.org/">Org Mode</a> para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos <b>.org</b> como páginas <b>html</b>.
 </p>
@@ -12,7 +12,7 @@ O primeiro passo é carregar o sistema de publicação:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
+<pre class="src src-emacs-lisp">  (<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
 </pre>
 </div>
 
@@ -21,18 +21,18 @@ A configuração é toda realizada através da variável <code>org-publish-proje
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-publish-project-alist
-    (list '(<span class="org-string">"blog:main"</span>
-            <span class="org-builtin">:base-directory</span> <span class="org-string">"./content"</span>
-            <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
-            <span class="org-builtin">:publishing-directory</span> <span class="org-string">"./public"</span>
-            <span class="org-builtin">:publishing-function</span> org-html-publish-to-html)
-          '(<span class="org-string">"blog:assets"</span>
-            <span class="org-builtin">:base-directory</span> <span class="org-string">"./assets"</span>
-            <span class="org-builtin">:base-extension</span> <span class="org-string">"css</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">js</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jpg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">gif</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">pdf</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">mp3</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ogg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">woff2</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ttf"</span>
-            <span class="org-builtin">:publishing-directory</span> <span class="org-string">"./public"</span>
-            <span class="org-builtin">:recursive</span> t
-            <span class="org-builtin">:publishing-function</span> org-publish-attachment)))
+<pre class="src src-emacs-lisp">  (<span class="org-keyword">setq</span> org-publish-project-alist
+      (list '(<span class="org-string">"blog:main"</span>
+              <span class="org-builtin">:base-directory</span> <span class="org-string">"./content"</span>
+              <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
+              <span class="org-builtin">:publishing-directory</span> <span class="org-string">"./public"</span>
+              <span class="org-builtin">:publishing-function</span> org-html-publish-to-html)
+            '(<span class="org-string">"blog:assets"</span>
+              <span class="org-builtin">:base-directory</span> <span class="org-string">"./assets"</span>
+              <span class="org-builtin">:base-extension</span> <span class="org-string">"css</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">js</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jpg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">gif</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">pdf</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">mp3</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ogg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">woff2</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ttf"</span>
+              <span class="org-builtin">:publishing-directory</span> <span class="org-string">"./public"</span>
+              <span class="org-builtin">:recursive</span> t
+              <span class="org-builtin">:publishing-function</span> org-publish-attachment)))
 </pre>
 </div>
 
@@ -60,7 +60,7 @@ Por fim, basta uma única linha de código para realizar a publicação de todos
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(org-publish-all t)
+<pre class="src src-emacs-lisp">  (org-publish-all t)
 </pre>
 </div>
 
@@ -69,8 +69,8 @@ De modo a facilitar a publicação é aconselhável colocar todo este código em
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">sh</span>
-emacs -Q --script build-site.el
+<pre class="src src-sh">  <span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/sh</span>
+  emacs -Q --script build-site.el
 </pre>
 </div>
 
@@ -83,7 +83,7 @@ Com isso, o blog está pronto. Agora basta escrever seus posts como documentos O
 </p>
 
 <div class="org-src-container">
-<pre class="src src-literal">[[file:other-page.org][Other Page]]
+<pre class="src src-literal">  [[file:other-page.org][Other Page]]
 </pre>
 </div>
 
@@ -92,7 +92,7 @@ o mesmo vale para recursos como imagens:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-literal">[[file:img/some-image.jpg]]
+<pre class="src src-literal">  [[file:img/some-image.jpg]]
 </pre>
 </div>
 
@@ -100,54 +100,54 @@ o mesmo vale para recursos como imagens:
 Para facilitar a adição de links, basta executar <code>C-c c-l</code> e interativamente informar o link e a descrição.
 </p>
 
-<div id="outline-container-org83f577c" class="outline-2">
-<h2 id="org83f577c"><a href="#org83f577c">Adicionando cabeçalho e rodapé</a></h2>
-<div class="outline-text-2" id="text-org83f577c">
+<div id="outline-container-org1cffaa4" class="outline-2">
+<h2 id="org1cffaa4"><a href="#org1cffaa4">Adicionando cabeçalho e rodapé</a></h2>
+<div class="outline-text-2" id="text-org1cffaa4">
 <p>
 Podemos querer modificar o estilo do blog como um todo para adicionar cabeçalho e rodapé em todas as páginas. Para isso podemos sobreescrever o <i>exporter</i> de <b>html</b> do Org Mode:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">cl-lib</span>)
-(<span class="org-keyword">use-package</span> <span class="org-constant">esxml</span>
-  <span class="org-builtin">:pin</span> <span class="org-string">"melpa-stable"</span>
-  <span class="org-builtin">:ensure</span> t)
+<pre class="src src-emacs-lisp">  (<span class="org-keyword">require</span> '<span class="org-constant">cl-lib</span>)
+  (<span class="org-keyword">use-package</span> <span class="org-constant">esxml</span>
+    <span class="org-builtin">:pin</span> <span class="org-string">"melpa-stable"</span>
+    <span class="org-builtin">:ensure</span> t)
 
-(org-export-define-derived-backend 'site-html 'html
-                                   <span class="org-builtin">:translate-alist</span>
-                                   '((template . org-html-template)))
+  (org-export-define-derived-backend 'site-html 'html
+                                     <span class="org-builtin">:translate-alist</span>
+                                     '((template . org-html-template)))
 
-(<span class="org-keyword">defun</span> <span class="org-function-name">org-html-template</span> (contents info)
-  (generate-page (org-export-data (plist-get info <span class="org-builtin">:title</span>) info)
-                 contents
-                 info
-                 <span class="org-builtin">:publish-date</span> (org-export-data
-                                (org-export-get-date info <span class="org-string">"%B %e, %Y"</span>) info)))
+  (<span class="org-keyword">defun</span> <span class="org-function-name">org-html-template</span> (contents info)
+    (generate-page (org-export-data (plist-get info <span class="org-builtin">:title</span>) info)
+                   contents
+                   info
+                   <span class="org-builtin">:publish-date</span> (org-export-data
+                                  (org-export-get-date info <span class="org-string">"%B %e, %Y"</span>) info)))
 
-(<span class="org-keyword">cl-defun</span> <span class="org-function-name">generate-page</span> (title
-                         content
-                         info
-                         <span class="org-type">&amp;key</span>
-                         (publish-date))
-  (concat
-   <span class="org-string">"&lt;!DOCTYPE html&gt;"</span>
-   (sxml-to-xml
-    `(html (@ (lang <span class="org-string">"en"</span>))
-           (head
-            (meta (@ (charset <span class="org-string">"utf-8"</span>)))
-            (meta (@ (author <span class="org-string">"Vida em 8 Bits - Maur&#237;cio Mussatto Scopel"</span>)))
-            (meta (@ (name <span class="org-string">"viewport"</span>)
-                     (content <span class="org-string">"width=device-width, initial-scale=1, shrink-to-fit=no"</span>)))
-            (link (@ (rel <span class="org-string">"icon"</span>) (type <span class="org-string">"image/png"</span>) (href <span class="org-string">"/img/favicon.png"</span>))) 
-            (link (@ (rel <span class="org-string">"stylesheet"</span>) (href ,(concat site-url <span class="org-string">"/css/code.css"</span>))))
-            (link (@ (rel <span class="org-string">"stylesheet"</span>) (href ,(concat site-url <span class="org-string">"/css/site.css"</span>))))
-            (title ,(concat title <span class="org-string">" - Vida em 8 Bits"</span>)))
-           (body (site-header)
-                 (div (@ (class <span class="org-string">"container"</span>))
-                      (h1 <span class="org-string">"Ol&#225;, leitores do Vida em 8 Bits!"</span>)
-                      (div (@ (id <span class="org-string">"content"</span>))
-                           ,content))
-                 (site-footer))))))
+  (<span class="org-keyword">cl-defun</span> <span class="org-function-name">generate-page</span> (title
+                           content
+                           info
+                           <span class="org-type">&amp;key</span>
+                           (publish-date))
+    (concat
+     <span class="org-string">"&lt;!DOCTYPE html&gt;"</span>
+     (sxml-to-xml
+      `(html (@ (lang <span class="org-string">"en"</span>))
+             (head
+              (meta (@ (charset <span class="org-string">"utf-8"</span>)))
+              (meta (@ (author <span class="org-string">"Vida em 8 Bits - Maur&#237;cio Mussatto Scopel"</span>)))
+              (meta (@ (name <span class="org-string">"viewport"</span>)
+                       (content <span class="org-string">"width=device-width, initial-scale=1, shrink-to-fit=no"</span>)))
+              (link (@ (rel <span class="org-string">"icon"</span>) (type <span class="org-string">"image/png"</span>) (href <span class="org-string">"/img/favicon.png"</span>))) 
+              (link (@ (rel <span class="org-string">"stylesheet"</span>) (href ,(concat site-url <span class="org-string">"/css/code.css"</span>))))
+              (link (@ (rel <span class="org-string">"stylesheet"</span>) (href ,(concat site-url <span class="org-string">"/css/site.css"</span>))))
+              (title ,(concat title <span class="org-string">" - Vida em 8 Bits"</span>)))
+             (body (site-header)
+                   (div (@ (class <span class="org-string">"container"</span>))
+                        (h1 <span class="org-string">"Ol&#225;, leitores do Vida em 8 Bits!"</span>)
+                        (div (@ (id <span class="org-string">"content"</span>))
+                             ,content))
+                   (site-footer))))))
 </pre>
 </div>
 
@@ -156,35 +156,35 @@ a função <code>generate-page</code> está super simplificada para dar o entend
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(list `(element1)
-      `(element2))
+<pre class="src src-emacs-lisp">    (list `(element1)
+          `(element2))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org433881c" class="outline-2">
-<h2 id="org433881c"><a href="#org433881c">Melhorando o visual</a></h2>
-<div class="outline-text-2" id="text-org433881c">
+<div id="outline-container-org477c78c" class="outline-2">
+<h2 id="org477c78c"><a href="#org477c78c">Melhorando o visual</a></h2>
+<div class="outline-text-2" id="text-org477c78c">
 <p>
 Para um bom visual do seu blog, a instalação do pacote <code>htmlize</code> é essencial se você deseja utilizar blocos de código. O restante do <code>html</code> gerado pode ser customizado por meio de variáveis:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-publish-use-timestamps-flag t
-      org-export-with-section-numbers nil
-      org-export-use-babel nil
-      org-export-with-smart-quotes t
-      org-export-with-sub-superscripts nil
-      org-export-with-tags 'not-in-toc
-      org-html-htmlize-output-type 'css
-      org-html-prefer-user-labels t
-      org-html-link-use-abs-url t
-      org-html-link-org-files-as-html t
-      org-html-html5-fancy t
-      org-html-self-link-headlines t
-      org-export-with-toc nil
-      make-backup-files nil)
+<pre class="src src-emacs-lisp">  (<span class="org-keyword">setq</span> org-publish-use-timestamps-flag t
+        org-export-with-section-numbers nil
+        org-export-use-babel nil
+        org-export-with-smart-quotes t
+        org-export-with-sub-superscripts nil
+        org-export-with-tags 'not-in-toc
+        org-html-htmlize-output-type 'css
+        org-html-prefer-user-labels t
+        org-html-link-use-abs-url t
+        org-html-link-org-files-as-html t
+        org-html-html5-fancy t
+        org-html-self-link-headlines t
+        org-export-with-toc nil
+        make-backup-files nil)
 </pre>
 </div>
 
@@ -194,53 +194,53 @@ para compreender o objetivo de cada variável, execute <code>M-x describe-variab
 </div>
 </div>
 
-<div id="outline-container-org8b42f36" class="outline-2">
-<h2 id="org8b42f36"><a href="#org8b42f36">Organizando o download de pacotes</a></h2>
-<div class="outline-text-2" id="text-org8b42f36">
+<div id="outline-container-org7560768" class="outline-2">
+<h2 id="org7560768"><a href="#org7560768">Organizando o download de pacotes</a></h2>
+<div class="outline-text-2" id="text-org7560768">
 <p>
 Para evitar que pacotes obtidos na execução do script sejam instalados no seu diretório de configuração principal do Emacs, basta atualizar o valor da variável <code>package-user-dir</code> para apontar para um diretório oculto como por exemplo <code>.packages</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
-(<span class="org-keyword">setq</span> package-user-dir (expand-file-name <span class="org-string">"./.packages"</span>))
+<pre class="src src-emacs-lisp">  (<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
+  (<span class="org-keyword">setq</span> package-user-dir (expand-file-name <span class="org-string">"./.packages"</span>))
 
-(add-to-list 'package-archives '(<span class="org-string">"melpa"</span> . <span class="org-string">"https://melpa.org/packages/"</span>))
-(add-to-list 'package-archives '(<span class="org-string">"melpa-stable"</span> . <span class="org-string">"https://stable.melpa.org/packages/"</span>))
+  (add-to-list 'package-archives '(<span class="org-string">"melpa"</span> . <span class="org-string">"https://melpa.org/packages/"</span>))
+  (add-to-list 'package-archives '(<span class="org-string">"melpa-stable"</span> . <span class="org-string">"https://stable.melpa.org/packages/"</span>))
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Initialize the package system</span>
-(package-initialize)
-(<span class="org-keyword">unless</span> package-archive-contents
-  (package-refresh-contents))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Initialize the package system</span>
+  (package-initialize)
+  (<span class="org-keyword">unless</span> package-archive-contents
+    (package-refresh-contents))
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Install use-package</span>
-(<span class="org-keyword">unless</span> (package-installed-p 'use-package)
-  (package-install 'use-package))
-(<span class="org-keyword">require</span> '<span class="org-constant">use-package</span>)  
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Install use-package</span>
+  (<span class="org-keyword">unless</span> (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (<span class="org-keyword">require</span> '<span class="org-constant">use-package</span>)  
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org245cd24" class="outline-2">
-<h2 id="org245cd24"><a href="#org245cd24">Acessando o blog</a></h2>
-<div class="outline-text-2" id="text-org245cd24">
+<div id="outline-container-org4185d33" class="outline-2">
+<h2 id="org4185d33"><a href="#org4185d33">Acessando o blog</a></h2>
+<div class="outline-text-2" id="text-org4185d33">
 <p>
 Para acessar seu blog localmente você pode utilizar o pacote <a href="https://github.com/skeeto/emacs-web-server">simple-httpd</a> para subir um servidor local, após a instalação do pacote basta executar <code>M-x httpd-serve-directory</code>, selecionar o diretório de publicação e então acessar o blog via <a href="http://localhost:8080">http://localhost:8080</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org93f89ac" class="outline-2">
-<h2 id="org93f89ac"><a href="#org93f89ac">Criando a listagem de posts</a></h2>
-<div class="outline-text-2" id="text-org93f89ac">
+<div id="outline-container-orgda5b59f" class="outline-2">
+<h2 id="orgda5b59f"><a href="#orgda5b59f">Criando a listagem de posts</a></h2>
+<div class="outline-text-2" id="text-orgda5b59f">
 <p>
 Todo blog tem uma página listando todos os posts pela data mais recente. Bem, isso é simples de resolver, basta automatizar a geração de uma página <b>.org</b> contendo a listagem dos posts, o sistema de publicação tomará conta do restante. O primeiro passo é adicionar uma propriedade de data aos seus posts:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span class="org-org-document-info-keyword">#+DATE:</span> <span class="org-org-document-info">&lt;2024-06-29&gt;</span>
-...
+<pre class="src src-org"><span class="org-org-document-info-keyword">  #+DATE:</span> <span class="org-org-document-info">&lt;2024-06-29&gt;</span>
+  ...
 </pre>
 </div>
 
@@ -258,32 +258,32 @@ Por fim, basta um simples script em Emacs Lisp para resolver o problema que:
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">org</span>)
+<pre class="src src-emacs-lisp">  (<span class="org-keyword">require</span> '<span class="org-constant">org</span>)
 
-(<span class="org-keyword">defun</span> <span class="org-function-name">parse-date</span> (date)
-  <span class="org-doc">"Parse DATE to dd de mm, yyyy."</span>
-  (format-time-string <span class="org-string">"%d de %B, %Y"</span> date))
+  (<span class="org-keyword">defun</span> <span class="org-function-name">parse-date</span> (date)
+    <span class="org-doc">"Parse DATE to dd de mm, yyyy."</span>
+    (format-time-string <span class="org-string">"%d de %B, %Y"</span> date))
 
-(<span class="org-keyword">defun</span> <span class="org-function-name">org-get-date</span> (file)
-  <span class="org-doc">"Extract the DATE property from an org mode FILE."</span>
-  (<span class="org-keyword">with-current-buffer</span> (find-file-noselect file)
-    (goto-char (point-min))
-    (<span class="org-keyword">when</span> (re-search-forward <span class="org-string">"^#\\+DATE: </span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">.*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">$"</span> nil t)
-      (substring-no-properties
-       (match-string 1)))))
+  (<span class="org-keyword">defun</span> <span class="org-function-name">org-get-date</span> (file)
+    <span class="org-doc">"Extract the DATE property from an org mode FILE."</span>
+    (<span class="org-keyword">with-current-buffer</span> (find-file-noselect file)
+      (goto-char (point-min))
+      (<span class="org-keyword">when</span> (re-search-forward <span class="org-string">"^#\\+DATE: </span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">.*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">$"</span> nil t)
+        (substring-no-properties
+         (match-string 1)))))
 
-(<span class="org-keyword">with-temp-file</span> <span class="org-string">"content/blog.org"</span>
-  (<span class="org-keyword">let</span> ((posts-folder <span class="org-string">"./content/posts/"</span>))
-    (seq-do
-     (<span class="org-keyword">lambda</span> (post)
-       (insert (format <span class="org-string">"** [[../%s][%s]]\n\n"</span>
-                       (car (string-split post <span class="org-string">".org"</span>))
-                       (org-get-title (concat posts-folder post))))
-       (insert (format <span class="org-string">"%s por Maur&#237;cio Mussatto Scopel\n"</span>
-                       (parse-date
-                        (date-to-time
-                         (org-get-date (concat posts-folder post)))))))
-     (directory-files posts-folder nil <span class="org-string">".org"</span>))))
+  (<span class="org-keyword">with-temp-file</span> <span class="org-string">"content/blog.org"</span>
+    (<span class="org-keyword">let</span> ((posts-folder <span class="org-string">"./content/posts/"</span>))
+      (seq-do
+       (<span class="org-keyword">lambda</span> (post)
+         (insert (format <span class="org-string">"** [[../%s][%s]]\n\n"</span>
+                         (car (string-split post <span class="org-string">".org"</span>))
+                         (org-get-title (concat posts-folder post))))
+         (insert (format <span class="org-string">"%s por Maur&#237;cio Mussatto Scopel\n"</span>
+                         (parse-date
+                          (date-to-time
+                           (org-get-date (concat posts-folder post)))))))
+       (directory-files posts-folder nil <span class="org-string">".org"</span>))))
 </pre>
 </div>
 

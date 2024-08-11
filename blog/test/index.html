@@ -1,0 +1,476 @@
+<!-- Generated from 6ca3d28 on 2024-08-11 @ 02:37 with Emacs 27.1 (Org mode 9.3) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/test"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores</h1><p class="site-post-meta">10 de agosto, 2024</p><div id="content"><p>
+Neste post, lhes contarei a saga de como digitalizei o PDF de um dicionário para a criação de um App para o estudo de vocabulário utilizando compiladores.
+</p>
+
+<p>
+Já fazem muitos anos que não tenho dificuldade nas leituras em Inglês de livros técnicos, e isso tem um motivo, o vocabulário destes livros é altamente especializado, uma vez compreendido e pronto, a maioria dos livros podem ser lidos sem grandes dificuldades. O mesmo não é verdade toda vez que inicio estudos de outros assuntos, como: literatura, filosofia, história ou economia. Ao adentrar em um novo campo de conhecimento me pego parando a leitura inúmeras vezes para traduzir o vocabulário do livro. Durante a leitura, normalmente recorro a ferramentas de tradução online. Neste processo, adiciono a maioria das palavras ao meu vocabulário sem grandes dificuldades, no entanto, notei que para um pequeno conjunto de palavras muito específicas tenho mais dificuldades, pesquiso pela mesma palavra inúmeras vezes antes de decorá-la, ou seja, lembro que já pesquisei pela tradução de determinadas palavras, embora ainda não lembre de seus significados. Criei listas de palavras para decorá-las mas logo percebi o quão ineficiente era este processo, então meu instinto de programador pensou em uma única coisa: automação.
+</p>
+
+<p>
+A maneira mais eficiente que encontrei de obter o significado de palavras durante a leitura sem perder o foco, foi utilizando aplicativos de tradução. Sendo assim, o que eu preciso é de um aplicativo similar, mas que mantenha uma memória das palavras que tenho mais dificuldade e que me permita treinar o aprendizado destas palvras de alguma forma. A partir disso, projetei a criação de um aplicativo para:
+</p>
+
+<ul class="org-ul">
+<li>Replicar a experiência de aplicativos de tradução com os quais estou acostumado;</li>
+<li>Adicionar a funcionalidade de treinamento:
+<ul class="org-ul">
+<li>Cada palavra pesquisada deve ser adicionada a uma lista de palavras para treinamento com um contador do número de pesquisas associado - para possibilitar a criação de uma lista de prioridade das palavras que mais tenho dificuldade;</li>
+<li>Na tela de treinamento, cada erro ou acerto deve atualizar o contador de erros daquela palavra até ao ponto em que a palavra pode ser removida da lista de treinamento.</li>
+</ul></li>
+</ul>
+
+<p>
+A implementação de um aplicativo como este é razoavelmente simples, basta obter alguma API de tradução - de alguma plataforma tradicional, ou já que estamos em tempos de IA, de alguma API baseada em um modelo <i>LLM</i>. No entanto, eu defini alguns requisitos que precisavam ser atendidos:
+</p>
+
+<ul class="org-ul">
+<li>O aplicativo não deve gerar custos financeiros;</li>
+<li>A implementação deve ser divertida 🥸.</li>
+</ul>
+
+<p>
+Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅. Não demorei muito para perceber que não era necessário a implementação de um sistema de tradução completo, mas de um simples dicionário, uma vez que quero realizar a tradução de palavras e não de sentenças completas. Esta constatação simplifica por ordens de grandeza o problema. Procurei por dicionários digitalizados na internet, mas não encontrei nada muito completo, era preciso digitalizar um dicionário. Este problema pode ser resolvido em duas etapas, converter o PDF do dicionário em texto, e a partir do texto gerar um mapa com a estrutura: <code>entrada do dicionário =&gt; lista de traduções</code>.
+</p>
+
+<div id="outline-container-org04449ce" class="outline-2">
+<h2 id="org04449ce"><a href="#org04449ce">Transformando PDF em texto</a></h2>
+<div class="outline-text-2" id="text-org04449ce">
+<p>
+Tentei não perder muito tempo com esta etapa recorrendo a ferramentas online, mas não demorei muito para perceber um problema, dicionários são divididos em 2 colunas, e estas ferramentas não entendem isso:
+</p>
+
+
+<div class="figure">
+<p><img src="digitalizando-um-dicionario-com-compiladores/Transformando_PDF_em_texto/2024-07-06_17-52-50_screenshot.png" alt="Estrutura básica de um dicionário" />
+</p>
+<p><span class="figure-number">Figura 1: </span>Estrutura básica de um dicionário</p>
+</div>
+
+<p>
+O texto é gerado considerando arquivos normais sem subdivisão em um mesma página. O que eu precisava era, para cada página, gerar o texto da coluna da esquerda e depois o da coluna da direita. A biblioteca <a href="https://itextpdf.com/">iText</a> permite realizar este processamento de forma muito simples, basta definir áreas representando cada coluna para realizar a extração dos textos separadamente. A classe em Java abaixo demonstra como realizar a conversão de um dicionário em PDF para um arquivo texto especificando os limites via constantes e as páginas de interesse via parâmetros do método <i>convertToText</i>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java">  <span class="org-keyword">import</span> <span class="org-constant">com</span>.<span class="org-constant">itextpdf</span>.<span class="org-constant">text</span>.<span class="org-type">Rectangle</span>;
+  <span class="org-keyword">import</span> <span class="org-constant">com</span>.<span class="org-constant">itextpdf</span>.<span class="org-constant">text</span>.<span class="org-constant">pdf</span>.<span class="org-type">PdfReader</span>;
+  <span class="org-keyword">import</span> <span class="org-constant">com</span>.<span class="org-constant">itextpdf</span>.<span class="org-constant">text</span>.<span class="org-constant">pdf</span>.<span class="org-constant">parser</span>.*;
+
+  <span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">io</span>.<span class="org-type">FileOutputStream</span>;
+  <span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">io</span>.<span class="org-type">IOException</span>;
+
+  <span class="org-keyword">class</span> <span class="org-type">PdfConverter</span> {
+      <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">byte</span>[] <span class="org-variable-name">NL</span> = <span class="org-string">"\n"</span>.getBytes();
+
+      <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">VERTICAL_MARGIN</span> = 38;
+      <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">X_MAX</span> = 432;
+      <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">Y_MAX</span> = 663;
+        
+      <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">convertToText</span>(<span class="org-type">int</span> <span class="org-variable-name">startPage</span>, <span class="org-type">int</span> <span class="org-variable-name">endPage</span>) <span class="org-keyword">throws</span> <span class="org-type">IOException</span> {
+          <span class="org-type">PdfReader</span> <span class="org-variable-name">reader</span> = <span class="org-keyword">new</span> <span class="org-type">PdfReader</span>(<span class="org-string">"input-file.pdf"</span>);
+          <span class="org-type">float</span> <span class="org-variable-name">middlePdfPage</span> = ((<span class="org-type">float</span>) X_MAX / 2) + 2;
+          <span class="org-type">var</span> <span class="org-variable-name">leftColumn</span> = <span class="org-keyword">new</span> <span class="org-type">Rectangle</span>(0, VERTICAL_MARGIN, middlePdfPage, Y_MAX - VERTICAL_MARGIN);
+          <span class="org-type">var</span> <span class="org-variable-name">rightColumn</span> = <span class="org-keyword">new</span> <span class="org-type">Rectangle</span>(middlePdfPage, VERTICAL_MARGIN, X_MAX, Y_MAX - VERTICAL_MARGIN);
+
+          <span class="org-keyword">try</span> (<span class="org-type">var</span> <span class="org-variable-name">outStream</span> = <span class="org-keyword">new</span> <span class="org-type">FileOutputStream</span>(<span class="org-string">"out-file.txt"</span>)) {
+              <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = startPage; i &lt;= endPage; i++) {
+                  outStream.write(extractText(reader, leftColumn, i).getBytes());
+                  outStream.write(NL);
+                  outStream.write(extractText(reader, rightColumn, i).getBytes());
+                  outStream.write(NL);
+              }
+          }
+      }
+
+      <span class="org-keyword">private</span> <span class="org-type">String</span> <span class="org-function-name">extractText</span>(<span class="org-type">PdfReader</span> <span class="org-variable-name">reader</span>, <span class="org-type">Rectangle</span> <span class="org-variable-name">region</span>, <span class="org-type">int</span> <span class="org-variable-name">pageNumber</span>) <span class="org-keyword">throws</span> <span class="org-type">IOException</span> {
+          <span class="org-type">RenderFilter</span>[] <span class="org-variable-name">filter</span> = {<span class="org-keyword">new</span> <span class="org-type">RegionTextRenderFilter</span>(region)};
+          <span class="org-type">var</span> <span class="org-variable-name">extractionStrategy</span> = <span class="org-keyword">new</span> <span class="org-type">LocationTextExtractionStrategy</span>(); 
+          <span class="org-type">var</span> <span class="org-variable-name">strategy</span> = <span class="org-keyword">new</span> <span class="org-type">FilteredTextRenderListener</span>(extractionStrategy, filter);
+          <span class="org-keyword">return</span> PdfTextExtractor.getTextFromPage(reader, pageNumber, strategy);
+      }
+  }
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgab91832" class="outline-2">
+<h2 id="orgab91832"><a href="#orgab91832">Estruturando o texto em um mapa de traduções</a></h2>
+<div class="outline-text-2" id="text-orgab91832">
+<p>
+É nesta etapa que a diversão começa. Dicionários tem uma estrutura muito bem definida e cientistas da computação sabem há décadas como analisar este tipo de texto: compiladores. Um exemplo disso são linguagens de programação, independente de qual você utilize, por trás dela sempre haverá um compilador ou um interpretador.
+</p>
+
+<p>
+Linguagens compiladas precisam de um compilador para transformar seu programa em uma linguagem de máquina que o computador possa executar. Antes da execução do programa, todo o código é traduzido (compilado) para uma linguagem de mais baixo nível. Compiladores completos realizam a tradução para uma linguagem de montagem como Assembly. No entanto, uma vez que existem compiladores extremamente maduros para linguagens como C, uma abordagem mais simples é realizar a tradução para uma linguagem intermediária como C, e aproveitar-se de otimizações existentes nestes compiladores para a geração do código de linguagem de máquina.
+</p>
+
+<p>
+No caso de linguagens interpretadas, não existe um compilador, mas sim um interpretador que interpreta cada comando fornecido para a geração de um resultado.
+</p>
+
+<p>
+Compiladores utilizam-se de gramáticas para analisar textos estruturados. O processo consiste na construção de uma <i>Syntax Tree</i> que representa o conteúdo do programa de acordo com os elementos da gramática. Um exemplo simples para ilustrar todo esse processo é a análise de objetos JSON, funcionam como mágica em linguagens como JavaScript, mas não é mágica, é um <i>parser</i> ancorado em uma gramática fazendo o trabalho duro.
+</p>
+
+<p>
+Primeiro, permita-me ilustrar uma gramática simples para representar arquivos JSON (Parr, 2013):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-antlr">  <span class="org-variable-name">json</span><span class="org-antlr-default">:</span> <span class="org-antlr-ruleref">object</span>
+        <span class="org-antlr-syntax">|</span> <span class="org-antlr-ruleref">array</span>
+        <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">object</span><span class="org-antlr-default">:</span> <span class="org-string">'{'</span> <span class="org-antlr-ruleref">pair</span> <span class="org-antlr-syntax">(</span><span class="org-string">','</span> <span class="org-antlr-ruleref">pair</span><span class="org-antlr-syntax">)*</span> <span class="org-string">'}'</span>
+          <span class="org-antlr-syntax">|</span> <span class="org-string">'{'</span> <span class="org-string">'}'</span> <span class="org-comment-delimiter">// </span><span class="org-comment">empty object</span>
+          <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">pair</span><span class="org-antlr-default">:</span> <span class="org-antlr-tokenref">STRING</span> <span class="org-string">':'</span> <span class="org-antlr-ruleref">value</span> <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">array</span><span class="org-antlr-default">:</span> <span class="org-string">'['</span> <span class="org-antlr-ruleref">value</span> <span class="org-antlr-syntax">(</span><span class="org-string">','</span> <span class="org-antlr-ruleref">value</span><span class="org-antlr-syntax">)*</span> <span class="org-string">']'</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-string">'['</span> <span class="org-string">']'</span> <span class="org-comment-delimiter">// </span><span class="org-comment">empty array</span>
+         <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">value</span><span class="org-antlr-default">:</span> <span class="org-antlr-tokenref">STRING</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-antlr-tokenref">NUMBER</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-antlr-ruleref">object</span> <span class="org-comment-delimiter">// </span><span class="org-comment">recursion</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-antlr-ruleref">array</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">recursion</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">true</span><span class="org-warning">'</span> <span class="org-comment-delimiter">// </span><span class="org-comment">keywords</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">false</span><span class="org-warning">'</span>
+         <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">null</span><span class="org-warning">'</span>
+         <span class="org-antlr-syntax">;</span>     
+</pre>
+</div>
+
+<p>
+Na gramática acima podemos visualizar os elementos de um objeto JSON:
+</p>
+
+<ul class="org-ul">
+<li><code>json</code> é o próprio objeto JSON composto de objetos ou arrays;</li>
+<li><code>object</code> é uma estrutura entre chaves que pode conter 0 ou mais pares;</li>
+<li><code>pair</code> é uma estrutura de chave e valor, a chave sendo uma string;</li>
+<li><code>array</code> é uma estrutura entre colchetes que pode conter 0 ou mais valores;</li>
+<li><code>value</code> é um valor primitivo - string, número ou palavras chave - ou um valor composto como um objeto ou array.</li>
+</ul>
+
+<p>
+Com a gramática definida, o compilador precisa analisar o programa para garantir que este respeita a estrutura definida na gramática e realizar a tradução para a linguagem destino. Este trabalho é definido em um conjunto de componentes que vamos analisar brevemente com a ajuda do temido livro do dragão 🐉🔥 (Aho et al., 2006).
+</p>
+</div>
+
+<div id="outline-container-orgcde512c" class="outline-3">
+<h3 id="orgcde512c"><a href="#orgcde512c">Analisador Léxico:</a></h3>
+<div class="outline-text-3" id="text-orgcde512c">
+<p>
+O analisador léxico é o primeiro componente de um compilador, ele é responsável pelo processamento do texto do programa na linguagem de origem. A saída deste componente é um conjunto de tokens na estrutura: <code>&lt;token,value&gt;</code>.
+</p>
+
+<p>
+<b>Exemplo</b>:
+</p>
+
+<p>
+Código-fonte: <code>price = base + rate * 15</code>
+</p>
+
+<p>
+Tokens: <code>&lt;id,1&gt; &lt;=&gt; &lt;id,2&gt; &lt;+&gt; &lt;id,3&gt; &lt;*&gt; &lt;15&gt;</code>
+</p>
+
+<p>
+Onde cada <code>token</code> é um símbolo abstrato e <code>value</code> aponta para uma entrada em uma <i>Symbol Table</i> - uma estrutura de dados utilizada em todas as fases do compilador para armazenar dados do programa.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5f49865" class="outline-3">
+<h3 id="org5f49865"><a href="#org5f49865">Analisador Sintático:</a></h3>
+<div class="outline-text-3" id="text-org5f49865">
+<p>
+A partir dos tokens gerados pelo analisador léxico, o analisador sintático gera uma <i>Syntax Tree</i> para representar a estrutura do programa. <i>Syntax Tree's</i> são amplamente utilizadas por IDE's e editores de texto para apontarem erros de sintaxe.
+</p>
+
+<p>
+A <i>Syntax Tree</i> do exemplo acima pode ser representada da seguinte forma:
+</p>
+
+
+<div class="figure">
+<p><img src="digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/assignment-example.png" alt="Exemplo de Syntax Tree" />
+</p>
+<p><span class="figure-number">Figura 2: </span>Exemplo de Syntax Tree</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ff824b" class="outline-3">
+<h3 id="org9ff824b"><a href="#org9ff824b">Analisador Semântico:</a></h3>
+<div class="outline-text-3" id="text-org9ff824b">
+<p>
+O analisador semântico utiliza os dados armazendos na <i>Symbol table</i> e a <i>Syntax Tree</i> para analisar a consistência semântica do programa de acordo com a definição da linguagem na gramática. Esta etapa realiza tarefas como checagem de tipos e promoção de tipos - caso a linguagem sendo analisada permita.
+</p>
+
+<p>
+Se a variável <code>rate</code> do exemplo fosse do tipo ponto flutuante, a <i>Syntax Tree</i> produzida pelo analisador semântico seria enriquecida com a promoção do valor <code>15</code> de <code>int</code> para <code>float</code>:
+</p>
+
+
+<div class="figure">
+<p><img src="digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/assignment-type-promotion-example.png" alt="Exemplo de Syntax Tree com promoção de tipo" />
+</p>
+<p><span class="figure-number">Figura 3: </span>Exemplo de Syntax Tree com promoção de tipo</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d9c4b7" class="outline-3">
+<h3 id="org1d9c4b7"><a href="#org1d9c4b7">Geração de código intermediário:</a></h3>
+<div class="outline-text-3" id="text-org1d9c4b7">
+<p>
+Com a <i>Syntax Tree</i> pronta, é chegado o momento de produzir código em uma representação intermediária. Este código deve ser simples de produzir e de converter em código de máquina, de modo a simplificar e tornar eficientes os próximos componentes do compilador. Um tipo comum de representação intermediária é o código de três endereços: uma sequência de instruções <i>assembly-like</i> com três operandos por instrução.
+</p>
+
+<p>
+A representação em código de três endereços para o exemplo seria algo assim:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm">  <span class="org-keyword">t1</span> = intToFloat(15)
+  <span class="org-keyword">t2</span> = id3 * t1
+  <span class="org-keyword">t3</span> = id2 + t2
+  <span class="org-keyword">id1</span> = t3
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdaf57a4" class="outline-3">
+<h3 id="orgdaf57a4"><a href="#orgdaf57a4">Otimização de código:</a></h3>
+<div class="outline-text-3" id="text-orgdaf57a4">
+<p>
+A partir da representação intermediária, inúmeras otimizações podem ser aplicadas de forma a tornar o código mais eficiente.
+</p>
+
+<p>
+Seguindo com o exemplo, o conjunto de instruções gerado na etapa anterior poderia ser reduzido removendo a conversão explícita de <code>int</code> para <code>float</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm">  <span class="org-keyword">t1</span> = id3 * 15.0
+  <span class="org-keyword">id1</span> = id2 + t1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef6ca82" class="outline-3">
+<h3 id="orgef6ca82"><a href="#orgef6ca82">Geração de código:</a></h3>
+<div class="outline-text-3" id="text-orgef6ca82">
+<p>
+Com o código intermediário otimizado, é hora da geração do código na linguagem destino. Caso esta seja linguagem de máquina, o código gerado poderia ser um Assembly como este:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm">  <span class="org-keyword">LDF</span>  R2, id3
+  <span class="org-keyword">MULF</span> R2, R2, #15.0
+  <span class="org-keyword">LDF</span>  R1, id2
+  <span class="org-keyword">ADDF</span> R1, R1, R2
+  <span class="org-keyword">STD</span> id1, R1
+</pre>
+</div>
+
+<p>
+Em cada operação:
+</p>
+<ul class="org-ul">
+<li>O primeiro operando especifica o destino.</li>
+<li>O <code>F</code> indica que a operação trabalha com operandos de ponto flutuante.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org77c8dbd" class="outline-3">
+<h3 id="org77c8dbd"><a href="#org77c8dbd">De volta ao dicionário</a></h3>
+<div class="outline-text-3" id="text-org77c8dbd">
+<p>
+Com uma visão geral de compiladores, voltemo-nos agora ao dicionário. Obviamente não criei um compilador do zero, utilizei ferramentas existentes para me auxiliar neste processo. Uma ferramenta muito conhecida no mundo Java é o <a href="https://www.antlr.org/">ANTLR</a>. O ANTRL permite a geração de <i>parsers</i> para a tradução, execução ou processamento de arquivos de texto estruturado ou binários. Tudo o que o ANTLR precisa é de uma gramática, a partir disso a ferramenta gera um <i>parser</i> baseado em <i>Design Patterns</i> como o <i>Visitor</i> que pode ser utilizado para a solução do problema, como por exemplo: gerar um mapa de traduções.
+</p>
+
+<p>
+Para a criação da gramática, é preciso identificar a estrutura do dicionário, vejamos um exemplo:
+</p>
+
+<div class="figure">
+<p><img src="digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png" alt="Exemplo de uma entrada de um dicionário" />
+</p>
+<p><span class="figure-number">Figura 4: </span>Exemplo de uma entrada de um dicionário</p>
+</div>
+
+<p>
+Estamos interessados em dois elementos: a palavra de origem e sua tradução. Do exemplo acima podemos extrair a seguinte estrutura:
+</p>
+
+<ul class="org-ul">
+<li>Palavra de origem;</li>
+<li>Classe gramatical;</li>
+<li>Contexto;</li>
+<li>Tradução;</li>
+<li>Sexo;</li>
+<li><code>;</code> seguido de exemplos.</li>
+</ul>
+
+<p>
+Por sorte, tudo o que não nos interessa para a resolução do problema é demarcado com um <code>;</code> facilitando a definição da gramática. A partir dessa estrutura podemos definir uma gramática inicial na linguagem utilizada pelo ANTLR:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-antlr">  <span class="org-antlr-ruleref">grammar</span> <span class="org-antlr-tokenref">EnPtDictionary</span><span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">compilationUnit</span><span class="org-antlr-default">:</span> <span class="org-antlr-syntax">(</span><span class="org-antlr-ruleref">entry</span> <span class="org-string">'\n'</span>?<span class="org-antlr-syntax">)*</span> <span class="org-antlr-tokenref">EOF</span> <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">entry</span><span class="org-antlr-default">:</span> <span class="org-antlr-ruleref">enWord</span> <span class="org-antlr-ruleref">context</span>? <span class="org-antlr-ruleref">grammaticalClass</span> <span class="org-antlr-ruleref">ptWord</span> <span class="org-antlr-ruleref">examples</span> <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">context</span><span class="org-antlr-default">:</span> <span class="org-string">'('</span> .*? <span class="org-string">')'</span> <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">grammaticalClass</span><span class="org-antlr-default">:</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">adj</span><span class="org-string">' '</span><span class="org-antlr-ruleref">adv</span><span class="org-warning">'</span>?
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">adj</span><span class="org-string">' '</span><span class="org-antlr-ruleref">pp</span><span class="org-warning">'</span>?
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">adv</span><span class="org-warning">'</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">npr</span><span class="org-string">' '</span><span class="org-antlr-ruleref">adj</span><span class="org-warning">'</span>?
+                  <span class="org-antlr-syntax">|</span> <span class="org-string">'n'</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">adj</span><span class="org-warning">'</span>?
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">pp</span><span class="org-string">' '</span><span class="org-antlr-ruleref">adj</span><span class="org-warning">'</span>?
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">prep</span><span class="org-warning">'</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vr</span><span class="org-warning">'</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vt</span><span class="org-warning">'</span> <span class="org-antlr-syntax">(</span><span class="org-string">'/'</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vi</span><span class="org-warning">'</span><span class="org-antlr-syntax">)?</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vt</span><span class="org-warning">'</span> <span class="org-antlr-syntax">(</span><span class="org-string">','</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vi</span><span class="org-warning">'</span><span class="org-antlr-syntax">)?</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vt</span><span class="org-warning">'</span> <span class="org-antlr-syntax">(</span><span class="org-string">'/'</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vr</span><span class="org-warning">'</span><span class="org-antlr-syntax">)?</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vt</span><span class="org-warning">'</span> <span class="org-antlr-syntax">(</span><span class="org-string">','</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vr</span><span class="org-warning">'</span><span class="org-antlr-syntax">)?</span>
+                  <span class="org-antlr-syntax">|</span> <span class="org-warning">'</span><span class="org-antlr-ruleref">vi</span><span class="org-warning">'</span>
+                  <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">enWord</span><span class="org-antlr-default">:</span> <span class="org-antlr-ruleref">word</span> <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">ptWord</span><span class="org-antlr-default">:</span> <span class="org-antlr-ruleref">word</span> <span class="org-antlr-tokenref">SEX</span>? <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">word</span><span class="org-antlr-default">:</span> <span class="org-antlr-tokenref">WORD</span> <span class="org-antlr-syntax">|</span> <span class="org-string">'\n'</span> <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">examples</span><span class="org-antlr-default">:</span> <span class="org-string">';'</span> .*? <span class="org-string">'.'</span> <span class="org-string">'\n'</span>
+          <span class="org-antlr-syntax">|</span> <span class="org-string">'.'</span> <span class="org-string">'\n'</span>
+          <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">NUMBER</span><span class="org-antlr-default">:</span> <span class="org-antlr-tokenref">DIGIT</span>+ <span class="org-antlr-syntax">;</span>
+  <span class="org-antlr-ruleref">fragment</span> <span class="org-variable-name">DIGIT</span><span class="org-antlr-default">:</span> <span class="org-string">'0'</span>..<span class="org-string">'9'</span> <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">SEX</span><span class="org-antlr-default">:</span> <span class="org-string">'m'</span> <span class="org-antlr-syntax">(</span><span class="org-string">','</span> <span class="org-string">'f'</span><span class="org-antlr-syntax">)?</span> <span class="org-antlr-syntax">|</span> <span class="org-string">'f'</span> <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">COMMA</span><span class="org-antlr-default">:</span> <span class="org-string">','</span> <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">WORD</span><span class="org-antlr-default">:</span> [a-zA-Z]+ <span class="org-antlr-syntax">;</span>
+
+  <span class="org-variable-name">WS</span><span class="org-antlr-default">:</span> [ \t\r]+ -&gt; <span class="org-antlr-ruleref">skip</span> <span class="org-antlr-syntax">;</span>
+</pre>
+</div>
+
+<p>
+Elementos como sexo e contexto não aparecem em todas as entradas do dicionário, por isso são definidos como opcionais utilizando o caractere <code>?</code>. Para detalhes da liguagem de definição da gramática, consulte a <a href="https://github.com/antlr/antlr4/blob/master/doc/grammars.md">documentação</a>.
+</p>
+
+<p>
+Com mais um exemplo, percebemos que uma palavra de tradução não é o suficente, precisamos de uma lista de traduções, que é nada mais que palavras separadas por vírgula:
+</p>
+
+<div class="figure">
+<p><img src="digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-25-20_screenshot.png" alt="Exemplo de uma entrada de um dicionário com múltiplas traduções" />
+</p>
+<p><span class="figure-number">Figura 5: </span>Exemplo de uma entrada de um dicionário com múltiplas traduções</p>
+</div>
+
+<p>
+Podemos atender esse requisito com algumas modificações na gramática:
+</p>
+<div class="org-src-container">
+<pre class="src src-antlr">  <span class="org-variable-name">entry</span><span class="org-antlr-default">:</span> <span class="org-antlr-ruleref">enWord</span> <span class="org-antlr-ruleref">context</span>? <span class="org-antlr-ruleref">grammaticalClass</span> <span class="org-antlr-ruleref">ptWord</span>+ <span class="org-antlr-ruleref">examples</span> <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">word</span><span class="org-antlr-default">:</span> <span class="org-antlr-tokenref">WORD</span> <span class="org-antlr-syntax">|</span> <span class="org-antlr-tokenref">COMMA</span> <span class="org-antlr-syntax">|</span> <span class="org-string">'\n'</span> <span class="org-antlr-syntax">;</span>
+  <span class="org-variable-name">COMMA</span><span class="org-antlr-default">:</span> <span class="org-string">','</span> <span class="org-antlr-syntax">;</span>
+</pre>
+</div>
+
+<p>
+Neste exemplo estou simplificando ao máximo e incluindo a vírgula como uma palavra, sendo assim, no <i>parser</i> será necessário remover palavras que são vírgulas. Isto poderia ser tratado na gramática, mas serve para ilustrar que a gramática não precisa estar perfeita para resolver o seu problema, muita coisa pode ser resolvida no <i>parser</i>.
+</p>
+
+<p>
+Após algumas iterações melhorando a gramática você terá uma que atenda as suas necessidades. Detalhes sangrentos como o tratamento de caracteres especiais foram mantidos de fora dos exemplos para facilitar o entendimento. A implementação completa você encontra no meu <a href="https://github.com/mauricio-ms/dictionary-parser">GitHub</a>.
+</p>
+
+<p>
+Com a gramática pronta podemos gerar o <i>parser</i>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">  java -cp <span class="org-string">"/tools/antlr-4.13.1-complete.jar:$CLASSPATH"</span> org.antlr.v4.Tool -visitor -o ../src/main/java/antlr -package antlr EnPtGrammar
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>-cp</code> adiciona o ANTLR ao classath;</li>
+<li><code>-visitor</code> instrui o comando para gerar o <i>parser</i> com o <i>Design Pattern Visitor</i>;</li>
+<li><code>-o</code> especifica o diretório de saída para as classes geradas;</li>
+<li><code>-package</code> especifica que todas as classes geradas devem conter a declaração <code>package antlr;</code>.</li>
+</ul>
+
+<p>
+Após a execução do comando, você terá a seguinte estrutura:
+</p>
+
+<div class="figure">
+<p><img src="digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-51-19_screenshot.png" alt="Estrutura do projeto após a compilação da gramática" />
+</p>
+<p><span class="figure-number">Figura 6: </span>Estrutura do projeto após a compilação da gramática</p>
+</div>
+
+<p>
+De todos estes arquivos, o que nos interessa é a classe Java <code>EnPtDicionaryBaseVisitor</code>, que é uma implementação padrão do <i>parser</i>. Para cada elemento da gramática temos um método com a assinatura <code>visitElement(var cx)</code> que podemos sobreescrever:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java">  <span class="org-keyword">class</span> <span class="org-type">EnPtDictionary</span> <span class="org-keyword">extends</span> <span class="org-type">EnPtDictionaryBaseVisitor</span>&lt;<span class="org-type">Void</span>&gt; {
+      <span class="org-c-annotation">@Override</span>
+      <span class="org-keyword">public</span> <span class="org-type">Void</span> <span class="org-function-name">visitEntry</span>(<span class="org-constant">EnPtDictionaryParser</span>.<span class="org-type">EntryContext</span> <span class="org-variable-name">ctx</span>) {
+          <span class="org-type">String</span> <span class="org-variable-name">enWord</span> = ctx.enWord().getText();
+          <span class="org-type">List</span>&lt;<span class="org-type">String</span>&gt; <span class="org-variable-name">ptWords</span> = ctx.ptWord().stream()
+                        .map(RuleContext::getText)
+                        .toList();
+          <span class="org-keyword">return</span> <span class="org-keyword">super</span>.visitEntry(ctx);
+      }
+  }
+</pre>
+</div>
+
+<p>
+E pronto, agora para cada entrada do dicionário, temos acesso a palavra de origem e a lista de traduções, podemos realizar qualquer processamento necessário não tratado na gramática - como a remoção das vírgulas - e então colocar os resultados em um mapa. A partir deste mapa, um arquivo JSON pode ser criado para servir como base de dados do aplicativo que pode rodar completamente offline.
+</p>
+
+<p>
+Para quem chegou até aqui e está se perguntando se o tal aplicativo foi de fato criado, sim, foi, e está sendo extremamente útil nas minhas leituras 📚.
+</p>
+
+<p>
+Esse é apenas um exemplo de problema que pode ser resolvido com tecnologias oriundas dos estudos de compiladores. Basta utilizar a sua criatividade.
+</p>
+
+<p>
+Isso é tudo pessoal 🐰🥕!
+</p>
+
+<p>
+<b>Referências</b>
+</p>
+
+<p>
+Parr, T. (2013). Definitive ANTLR 4 Reference (2nd ed.). Pragmatic Programmers.
+</p>
+
+<p>
+Aho, A. V., Lam, M. S., Sethi, R., &amp; Ullman, J. D. (2006). Compilers: Principles, techniques, and tools (2nd ed.). Pearson.
+</p>
+</div>
+</div>
+</div>
+</div></div></div><footer class="site-footer"><div class="container"><p>Fique a vontade para me enviar um email: ms -dot- mauricio93 -at- gmail -dot- com</p></div></footer></body></html>

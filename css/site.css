@@ -148,16 +148,16 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
-h1 {
+h1, h2, h3 {
   color: #ffff33;
 }
 
-h2 > a {
+h2 > a, h3 > a {
 	color: #ffff33;
 	text-decoration: none;
 }
 
-h2 > a:hover, h2 > a:focus {
+h2 > a:hover, h2 > a:focus, h3 > a:hover, h3 > a:focus {
 	color: #ffff33;
 	text-decoration: underline;
 }
@@ -446,4 +446,10 @@ strong {
 }
 
 .newsletter-text {
+}
+
+/** Figures **/
+.figure {
+	font-weight: bold;
+	font-size: 1.1rem;
 }
