@@ -1,3 +1,6 @@
+** [[../blog/test][Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores]]
+
+10 de agosto, 2024 por Maurício Mussatto Scopel
 ** [[../blog/criando-um-blog-no-emacs][Criando um blog no Emacs]]
 
 29 de junho, 2024 por Maurício Mussatto Scopel

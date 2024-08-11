@@ -1,0 +1,310 @@
+#+TITLE: Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores
+#+DATE: <2024-08-10>
+
+Neste post, lhes contarei a saga de como digitalizei o PDF de um dicionário para a criação de um App para o estudo de vocabulário utilizando compiladores.
+
+Já fazem muitos anos que não tenho dificuldade nas leituras em Inglês de livros técnicos, e isso tem um motivo, o vocabulário destes livros é altamente especializado, uma vez compreendido e pronto, a maioria dos livros podem ser lidos sem grandes dificuldades. O mesmo não é verdade toda vez que inicio estudos de outros assuntos, como: literatura, filosofia, história ou economia. Ao adentrar em um novo campo de conhecimento me pego parando a leitura inúmeras vezes para traduzir o vocabulário do livro. Durante a leitura, normalmente recorro a ferramentas de tradução online. Neste processo, adiciono a maioria das palavras ao meu vocabulário sem grandes dificuldades, no entanto, notei que para um pequeno conjunto de palavras muito específicas tenho mais dificuldades, pesquiso pela mesma palavra inúmeras vezes antes de decorá-la, ou seja, lembro que já pesquisei pela tradução de determinadas palavras, embora ainda não lembre de seus significados. Criei listas de palavras para decorá-las mas logo percebi o quão ineficiente era este processo, então meu instinto de programador pensou em uma única coisa: automação.
+
+A maneira mais eficiente que encontrei de obter o significado de palavras durante a leitura sem perder o foco, foi utilizando aplicativos de tradução. Sendo assim, o que eu preciso é de um aplicativo similar, mas que mantenha uma memória das palavras que tenho mais dificuldade e que me permita treinar o aprendizado destas palvras de alguma forma. A partir disso, projetei a criação de um aplicativo para:
+
+- Replicar a experiência de aplicativos de tradução com os quais estou acostumado;
+- Adicionar a funcionalidade de treinamento:
+  - Cada palavra pesquisada deve ser adicionada a uma lista de palavras para treinamento com um contador do número de pesquisas associado - para possibilitar a criação de uma lista de prioridade das palavras que mais tenho dificuldade;
+  - Na tela de treinamento, cada erro ou acerto deve atualizar o contador de erros daquela palavra até ao ponto em que a palavra pode ser removida da lista de treinamento.
+
+A implementação de um aplicativo como este é razoavelmente simples, basta obter alguma API de tradução - de alguma plataforma tradicional, ou já que estamos em tempos de IA, de alguma API baseada em um modelo /LLM/. No entanto, eu defini alguns requisitos que precisavam ser atendidos:
+
+- O aplicativo não deve gerar custos financeiros;
+- A implementação deve ser divertida 🥸.
+
+Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅. Não demorei muito para perceber que não era necessário a implementação de um sistema de tradução completo, mas de um simples dicionário, uma vez que quero realizar a tradução de palavras e não de sentenças completas. Esta constatação simplifica por ordens de grandeza o problema. Procurei por dicionários digitalizados na internet, mas não encontrei nada muito completo, era preciso digitalizar um dicionário. Este problema pode ser resolvido em duas etapas, converter o PDF do dicionário em texto, e a partir do texto gerar um mapa com a estrutura: ~entrada do dicionário => lista de traduções~.
+
+* Transformando PDF em texto
+
+Tentei não perder muito tempo com esta etapa recorrendo a ferramentas online, mas não demorei muito para perceber um problema, dicionários são divididos em 2 colunas, e estas ferramentas não entendem isso:
+
+#+DOWNLOADED: screenshot @ 2024-07-06 17:52:50
+#+CAPTION: Estrutura básica de um dicionário
+#+ATTR_HTML: :alt Estrutura básica de um dicionário
+[[file:digitalizando-um-dicionario-com-compiladores/Transformando_PDF_em_texto/2024-07-06_17-52-50_screenshot.png]]
+
+O texto é gerado considerando arquivos normais sem subdivisão em um mesma página. O que eu precisava era, para cada página, gerar o texto da coluna da esquerda e depois o da coluna da direita. A biblioteca [[https://itextpdf.com/][iText]] permite realizar este processamento de forma muito simples, basta definir áreas representando cada coluna para realizar a extração dos textos separadamente. A classe em Java abaixo demonstra como realizar a conversão de um dicionário em PDF para um arquivo texto especificando os limites via constantes e as páginas de interesse via parâmetros do método /convertToText/:
+
+#+begin_src java
+  import com.itextpdf.text.Rectangle;
+  import com.itextpdf.text.pdf.PdfReader;
+  import com.itextpdf.text.pdf.parser.*;
+
+  import java.io.FileOutputStream;
+  import java.io.IOException;
+
+  class PdfConverter {
+      private static final byte[] NL = "\n".getBytes();
+
+      private static final int VERTICAL_MARGIN = 38;
+      private static final int X_MAX = 432;
+      private static final int Y_MAX = 663;
+  	
+      public void convertToText(int startPage, int endPage) throws IOException {
+          PdfReader reader = new PdfReader("input-file.pdf");
+          float middlePdfPage = ((float) X_MAX / 2) + 2;
+          var leftColumn = new Rectangle(0, VERTICAL_MARGIN, middlePdfPage, Y_MAX - VERTICAL_MARGIN);
+          var rightColumn = new Rectangle(middlePdfPage, VERTICAL_MARGIN, X_MAX, Y_MAX - VERTICAL_MARGIN);
+
+          try (var outStream = new FileOutputStream("out-file.txt")) {
+              for (int i = startPage; i <= endPage; i++) {
+                  outStream.write(extractText(reader, leftColumn, i).getBytes());
+                  outStream.write(NL);
+                  outStream.write(extractText(reader, rightColumn, i).getBytes());
+                  outStream.write(NL);
+              }
+          }
+      }
+
+      private String extractText(PdfReader reader, Rectangle region, int pageNumber) throws IOException {
+          RenderFilter[] filter = {new RegionTextRenderFilter(region)};
+  	  var extractionStrategy = new LocationTextExtractionStrategy(); 
+          var strategy = new FilteredTextRenderListener(extractionStrategy, filter);
+          return PdfTextExtractor.getTextFromPage(reader, pageNumber, strategy);
+      }
+  }
+#+end_src
+
+* Estruturando o texto em um mapa de traduções
+
+É nesta etapa que a diversão começa. Dicionários tem uma estrutura muito bem definida e cientistas da computação sabem há décadas como analisar este tipo de texto: compiladores. Um exemplo disso são linguagens de programação, independente de qual você utilize, por trás dela sempre haverá um compilador ou um interpretador.
+
+Linguagens compiladas precisam de um compilador para transformar seu programa em uma linguagem de máquina que o computador possa executar. Antes da execução do programa, todo o código é traduzido (compilado) para uma linguagem de mais baixo nível. Compiladores completos realizam a tradução para uma linguagem de montagem como Assembly. No entanto, uma vez que existem compiladores extremamente maduros para linguagens como C, uma abordagem mais simples é realizar a tradução para uma linguagem intermediária como C, e aproveitar-se de otimizações existentes nestes compiladores para a geração do código de linguagem de máquina.
+
+No caso de linguagens interpretadas, não existe um compilador, mas sim um interpretador que interpreta cada comando fornecido para a geração de um resultado.
+
+Compiladores utilizam-se de gramáticas para analisar textos estruturados. O processo consiste na construção de uma /Syntax Tree/ que representa o conteúdo do programa de acordo com os elementos da gramática. Um exemplo simples para ilustrar todo esse processo é a análise de objetos JSON, funcionam como mágica em linguagens como JavaScript, mas não é mágica, é um /parser/ ancorado em uma gramática fazendo o trabalho duro.
+
+Primeiro, permita-me ilustrar uma gramática simples para representar arquivos JSON (Parr, 2013):
+
+#+begin_src antlr
+  json: object
+  	| array
+  	;
+
+  object: '{' pair (',' pair)* '}'
+  	  | '{' '}' // empty object
+  	  ;
+  pair: STRING ':' value ;
+
+  array: '[' value (',' value)* ']'
+  	 | '[' ']' // empty array
+  	 ;
+
+  value: STRING
+  	 | NUMBER
+  	 | object // recursion
+  	 | array  // recursion
+  	 | 'true' // keywords
+  	 | 'false'
+  	 | 'null'
+  	 ;     
+#+end_src
+
+Na gramática acima podemos visualizar os elementos de um objeto JSON:
+
+- =json= é o próprio objeto JSON composto de objetos ou arrays;
+- =object= é uma estrutura entre chaves que pode conter 0 ou mais pares;
+- =pair= é uma estrutura de chave e valor, a chave sendo uma string;
+- =array= é uma estrutura entre colchetes que pode conter 0 ou mais valores;
+- =value= é um valor primitivo - string, número ou palavras chave - ou um valor composto como um objeto ou array.
+
+Com a gramática definida, o compilador precisa analisar o programa para garantir que este respeita a estrutura definida na gramática e realizar a tradução para a linguagem destino. Este trabalho é definido em um conjunto de componentes que vamos analisar brevemente com a ajuda do temido livro do dragão 🐉🔥 (Aho et al., 2006).
+
+** Analisador Léxico:
+O analisador léxico é o primeiro componente de um compilador, ele é responsável pelo processamento do texto do programa na linguagem de origem. A saída deste componente é um conjunto de tokens na estrutura: =<token,value>=.
+
+*Exemplo*:
+
+Código-fonte: =price = base + rate * 15=
+
+Tokens: =<id,1> <=> <id,2> <+> <id,3> <*> <15>=
+
+Onde cada =token= é um símbolo abstrato e =value= aponta para uma entrada em uma /Symbol Table/ - uma estrutura de dados utilizada em todas as fases do compilador para armazenar dados do programa.
+
+** Analisador Sintático:
+A partir dos tokens gerados pelo analisador léxico, o analisador sintático gera uma /Syntax Tree/ para representar a estrutura do programa. /Syntax Tree's/ são amplamente utilizadas por IDE's e editores de texto para apontarem erros de sintaxe.
+
+A /Syntax Tree/ do exemplo acima pode ser representada da seguinte forma:
+
+#+CAPTION: Exemplo de Syntax Tree
+#+ATTR_HTML: :alt Exemplo de Syntax Tree
+[[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/assignment-example.png]]
+
+** Analisador Semântico:
+O analisador semântico utiliza os dados armazendos na /Symbol table/ e a /Syntax Tree/ para analisar a consistência semântica do programa de acordo com a definição da linguagem na gramática. Esta etapa realiza tarefas como checagem de tipos e promoção de tipos - caso a linguagem sendo analisada permita.
+
+Se a variável =rate= do exemplo fosse do tipo ponto flutuante, a /Syntax Tree/ produzida pelo analisador semântico seria enriquecida com a promoção do valor =15= de =int= para =float=:
+
+#+CAPTION: Exemplo de Syntax Tree com promoção de tipo
+#+ATTR_HTML: :alt Exemplo de Syntax Tree com promoção de tipo
+[[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/assignment-type-promotion-example.png]]
+
+** Geração de código intermediário:
+Com a /Syntax Tree/ pronta, é chegado o momento de produzir código em uma representação intermediária. Este código deve ser simples de produzir e de converter em código de máquina, de modo a simplificar e tornar eficientes os próximos componentes do compilador. Um tipo comum de representação intermediária é o código de três endereços: uma sequência de instruções /assembly-like/ com três operandos por instrução.
+
+A representação em código de três endereços para o exemplo seria algo assim:
+
+#+begin_src asm
+  t1 = intToFloat(15)
+  t2 = id3 * t1
+  t3 = id2 + t2
+  id1 = t3
+#+end_src
+
+** Otimização de código:
+A partir da representação intermediária, inúmeras otimizações podem ser aplicadas de forma a tornar o código mais eficiente.
+
+Seguindo com o exemplo, o conjunto de instruções gerado na etapa anterior poderia ser reduzido removendo a conversão explícita de =int= para =float=:
+
+#+begin_src asm
+  t1 = id3 * 15.0
+  id1 = id2 + t1
+#+end_src
+
+** Geração de código:
+Com o código intermediário otimizado, é hora da geração do código na linguagem destino. Caso esta seja linguagem de máquina, o código gerado poderia ser um Assembly como este:
+
+#+begin_src asm
+  LDF  R2, id3
+  MULF R2, R2, #15.0
+  LDF  R1, id2
+  ADDF R1, R1, R2
+  STD id1, R1
+#+end_src
+
+Em cada operação:
+- O primeiro operando especifica o destino.
+- O =F= indica que a operação trabalha com operandos de ponto flutuante.
+
+** De volta ao dicionário
+Com uma visão geral de compiladores, voltemo-nos agora ao dicionário. Obviamente não criei um compilador do zero, utilizei ferramentas existentes para me auxiliar neste processo. Uma ferramenta muito conhecida no mundo Java é o [[https://www.antlr.org/][ANTLR]]. O ANTRL permite a geração de /parsers/ para a tradução, execução ou processamento de arquivos de texto estruturado ou binários. Tudo o que o ANTLR precisa é de uma gramática, a partir disso a ferramenta gera um /parser/ baseado em /Design Patterns/ como o /Visitor/ que pode ser utilizado para a solução do problema, como por exemplo: gerar um mapa de traduções.
+
+Para a criação da gramática, é preciso identificar a estrutura do dicionário, vejamos um exemplo:
+#+DOWNLOADED: screenshot @ 2024-07-06 19:57:57
+#+CAPTION: Exemplo de uma entrada de um dicionário
+#+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário
+[[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png]]
+
+Estamos interessados em dois elementos: a palavra de origem e sua tradução. Do exemplo acima podemos extrair a seguinte estrutura:
+
+- Palavra de origem;
+- Classe gramatical;
+- Contexto;
+- Tradução;
+- Sexo;
+- =;= seguido de exemplos.
+
+Por sorte, tudo o que não nos interessa para a resolução do problema é demarcado com um =;= facilitando a definição da gramática. A partir dessa estrutura podemos definir uma gramática inicial na linguagem utilizada pelo ANTLR:
+
+#+begin_src antlr
+  grammar EnPtDictionary;
+
+  compilationUnit: (entry '\n'?)* EOF ;
+
+  entry: enWord context? grammaticalClass ptWord examples ;
+
+  context: '(' .*? ')' ;
+
+  grammaticalClass: 'adj' 'adv'?
+                  | 'adj' 'pp'?
+                  | 'adv'
+                  | 'npr' 'adj'?
+                  | 'n' 'adj'?
+                  | 'pp' 'adj'?
+                  | 'prep'
+                  | 'vr'
+                  | 'vt' ('/' 'vi')?
+                  | 'vt' (',' 'vi')?
+                  | 'vt' ('/' 'vr')?
+                  | 'vt' (',' 'vr')?
+                  | 'vi'
+                  ;
+
+  enWord: word ;
+  ptWord: word SEX? ;
+  word: WORD | '\n' ;
+
+  examples: ';' .*? '.' '\n'
+          | '.' '\n'
+          ;
+
+  NUMBER: DIGIT+ ;
+  fragment DIGIT: '0'..'9' ;
+
+  SEX: 'm' (',' 'f')? | 'f' ;
+  COMMA: ',' ;
+  WORD: [a-zA-Z]+ ;
+
+  WS: [ \t\r]+ -> skip ;
+#+end_src
+
+Elementos como sexo e contexto não aparecem em todas as entradas do dicionário, por isso são definidos como opcionais utilizando o caractere =?=. Para detalhes da liguagem de definição da gramática, consulte a [[https://github.com/antlr/antlr4/blob/master/doc/grammars.md][documentação]].
+
+Com mais um exemplo, percebemos que uma palavra de tradução não é o suficente, precisamos de uma lista de traduções, que é nada mais que palavras separadas por vírgula:
+#+DOWNLOADED: screenshot @ 2024-07-06 20:25:20
+#+CAPTION: Exemplo de uma entrada de um dicionário com múltiplas traduções
+#+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário com múltiplas traduções
+[[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-25-20_screenshot.png]]
+
+Podemos atender esse requisito com algumas modificações na gramática:
+#+begin_src antlr
+  entry: enWord context? grammaticalClass ptWord+ examples ;
+  word: WORD | COMMA | '\n' ;
+  COMMA: ',' ;
+#+end_src
+
+Neste exemplo estou simplificando ao máximo e incluindo a vírgula como uma palavra, sendo assim, no /parser/ será necessário remover palavras que são vírgulas. Isto poderia ser tratado na gramática, mas serve para ilustrar que a gramática não precisa estar perfeita para resolver o seu problema, muita coisa pode ser resolvida no /parser/.
+
+Após algumas iterações melhorando a gramática você terá uma que atenda as suas necessidades. Detalhes sangrentos como o tratamento de caracteres especiais foram mantidos de fora dos exemplos para facilitar o entendimento. A implementação completa você encontra no meu [[https://github.com/mauricio-ms/dictionary-parser][GitHub]].
+
+Com a gramática pronta podemos gerar o /parser/:
+
+#+begin_src shell
+  java -cp "/tools/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool -visitor -o ../src/main/java/antlr -package antlr EnPtGrammar
+#+end_src
+
+- =-cp= adiciona o ANTLR ao classath;
+- =-visitor= instrui o comando para gerar o /parser/ com o /Design Pattern Visitor/;
+- =-o= especifica o diretório de saída para as classes geradas;
+- =-package= especifica que todas as classes geradas devem conter a declaração =package antlr;=.
+
+Após a execução do comando, você terá a seguinte estrutura:
+#+DOWNLOADED: screenshot @ 2024-07-06 20:51:19
+#+CAPTION: Estrutura do projeto após a compilação da gramática
+#+ATTR_HTML: :alt Estrutura do projeto após a compilação da gramática
+[[file:digitalizando-um-dicionario-com-compiladores/Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_20-51-19_screenshot.png]]
+
+De todos estes arquivos, o que nos interessa é a classe Java =EnPtDicionaryBaseVisitor=, que é uma implementação padrão do /parser/. Para cada elemento da gramática temos um método com a assinatura =visitElement(var cx)= que podemos sobreescrever:
+
+#+begin_src java
+  class EnPtDictionary extends EnPtDictionaryBaseVisitor<Void> {
+      @Override
+      public Void visitEntry(EnPtDictionaryParser.EntryContext ctx) {
+          String enWord = ctx.enWord().getText();
+          List<String> ptWords = ctx.ptWord().stream()
+  			.map(RuleContext::getText)
+  			.toList();
+          return super.visitEntry(ctx);
+      }
+  }
+#+end_src
+
+E pronto, agora para cada entrada do dicionário, temos acesso a palavra de origem e a lista de traduções, podemos realizar qualquer processamento necessário não tratado na gramática - como a remoção das vírgulas - e então colocar os resultados em um mapa. A partir deste mapa, um arquivo JSON pode ser criado para servir como base de dados do aplicativo que pode rodar completamente offline.
+
+Para quem chegou até aqui e está se perguntando se o tal aplicativo foi de fato criado, sim, foi, e está sendo extremamente útil nas minhas leituras 📚.
+
+Esse é apenas um exemplo de problema que pode ser resolvido com tecnologias oriundas dos estudos de compiladores. Basta utilizar a sua criatividade.
+
+Isso é tudo pessoal 🐰🥕!
+
+*Referências*
+
+Parr, T. (2013). Definitive ANTLR 4 Reference (2nd ed.). Pragmatic Programmers.
+
+Aho, A. V., Lam, M. S., Sethi, R., & Ullman, J. D. (2006). Compilers: Principles, techniques, and tools (2nd ed.). Pearson.

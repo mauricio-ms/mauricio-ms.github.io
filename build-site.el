@@ -49,7 +49,8 @@
       org-html-self-link-headlines t
       org-export-with-toc nil
       make-backup-files nil
-	  org-export-default-language "pt_BR")
+	  org-export-default-language "pt_BR"
+	  org-src-preserve-indentation t)
 
 (set-locale-environment "pt_BR.UTF-8")
 
