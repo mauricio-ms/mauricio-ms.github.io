@@ -11,14 +11,14 @@ A maneira mais eficiente que encontrei de obter o significado de palavras durant
 - Replicar a experiência de aplicativos de tradução com os quais estou acostumado;
 - Adicionar a funcionalidade de treinamento:
   - Cada palavra pesquisada deve ser adicionada a uma lista de palavras para treinamento com um contador do número de pesquisas associado - para possibilitar a criação de uma lista de prioridade das palavras que mais tenho dificuldade;
-  - Na tela de treinamento, cada erro ou acerto deve atualizar o contador de erros daquela palavra até ao ponto em que a palavra possa ser removida da lista de treinamento.
+  - Na tela de treinamento, cada erro ou acerto deve atualizar o contador de erros daquela palavra até ao ponto em que possa ser removida da lista de treinamento.
 
 A implementação de um aplicativo como este é razoavelmente simples, basta obter alguma API de tradução - de alguma plataforma tradicional, ou já que estamos em tempos de IA, de alguma API baseada em um modelo /LLM/. No entanto, eu defini alguns requisitos que precisavam ser atendidos:
 
 - O aplicativo não deve gerar custos financeiros;
 - A implementação deve ser divertida 🥸.
 
-Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅. Não demorei muito para perceber que não era necessário a implementação de um sistema de tradução completo, mas de um simples dicionário, uma vez que quero realizar a tradução de palavras e não de sentenças completas. Esta constatação simplifica por ordens de grandeza o problema. Procurei por dicionários digitalizados na internet, mas não encontrei nada muito completo, era preciso digitalizar um dicionário. Este problema pode ser resolvido em duas etapas, converter o PDF do dicionário em texto, e a partir do texto gerar um mapa com a estrutura: ~entrada do dicionário => lista de traduções~.
+Bem, a implementação via API não se encaixa em nenhum destes requisitos 😅. Não demorei muito para perceber que não era necessário a implementação de um sistema de tradução completo, mas de um simples dicionário, uma vez que quero realizar a tradução de palavras e não de sentenças completas. Esta constatação simplifica por ordens de grandeza o problema. Procurei por dicionários digitalizados na internet, mas não encontrei nada muito completo, era preciso digitalizar um dicionário. Este problema pode ser resolvido em duas etapas: converter o PDF do dicionário em texto, e a partir do texto gerar um mapa com a estrutura: ~entrada do dicionário => lista de traduções~.
 
 * Transformando PDF em texto
 
