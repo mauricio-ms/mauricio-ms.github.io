@@ -1,4 +1,4 @@
-<!-- Generated from f01ba6a on 2024-08-11 @ 18:37 with Emacs 31.0.50 (Org mode 9.7.9) -->
+<!-- Generated from 48743d7 on 2024-08-11 @ 18:39 with Emacs 31.0.50 (Org mode 9.7.9) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Criando um blog no Emacs"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/img/vida-em-8-bits-banner.png"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/criando-um-blog-no-emacs"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Criando um blog no Emacs - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Criando um blog no Emacs</h1><p class="site-post-meta">29 de junho, 2024</p><div id="content"><p>
 Um blog é nada mais do que uma porção de páginas <b>html</b> estáticas, no entanto escrever texto em <b>html</b> puro não é uma experiência agradável. Usuários de <a href="https://www.gnu.org/software/emacs/">Emacs</a> estão acostumados a utilizar o <a href="https://orgmode.org/">Org Mode</a> para a criação de documentos e notas. O Org Mode suporta tudo o que é necessário para posts de um blog: texto com marcação, imagens e realce de sintaxe para blocos de código. Seria ótimo poder escrever os posts do seu blog no conforto do Emacs e é justamente isso que o sistema de publicação do Org Mode proporciona, publicar arquivos <b>.org</b> como páginas <b>html</b>.
 </p>
@@ -99,9 +99,9 @@ o mesmo vale para recursos como imagens:
 <p>
 Para facilitar a adição de links, basta executar <code>C-c c-l</code> e interativamente informar o link e a descrição.
 </p>
-<div id="outline-container-org0bf21c4" class="outline-2">
-<h2 id="org0bf21c4"><a href="#org0bf21c4">Adicionando cabeçalho e rodapé</a></h2>
-<div class="outline-text-2" id="text-org0bf21c4">
+<div id="outline-container-org4c74af6" class="outline-2">
+<h2 id="org4c74af6"><a href="#org4c74af6">Adicionando cabeçalho e rodapé</a></h2>
+<div class="outline-text-2" id="text-org4c74af6">
 <p>
 Podemos querer modificar o estilo do blog como um todo para adicionar cabeçalho e rodapé em todas as páginas. Para isso podemos sobreescrever o <i>exporter</i> de <b>html</b> do Org Mode:
 </p>
@@ -161,9 +161,9 @@ a função <code>generate-page</code> está super simplificada para dar o entend
 </div>
 </div>
 </div>
-<div id="outline-container-orgaec2b49" class="outline-2">
-<h2 id="orgaec2b49"><a href="#orgaec2b49">Melhorando o visual</a></h2>
-<div class="outline-text-2" id="text-orgaec2b49">
+<div id="outline-container-orgcd45512" class="outline-2">
+<h2 id="orgcd45512"><a href="#orgcd45512">Melhorando o visual</a></h2>
+<div class="outline-text-2" id="text-orgcd45512">
 <p>
 Para um bom visual do seu blog, a instalação do pacote <code>htmlize</code> é essencial se você deseja utilizar blocos de código. O restante do <code>html</code> gerado pode ser customizado por meio de variáveis:
 </p>
@@ -191,9 +191,9 @@ para compreender o objetivo de cada variável, execute <code>M-x describe-variab
 </p>
 </div>
 </div>
-<div id="outline-container-orga8a8e1e" class="outline-2">
-<h2 id="orga8a8e1e"><a href="#orga8a8e1e">Organizando o download de pacotes</a></h2>
-<div class="outline-text-2" id="text-orga8a8e1e">
+<div id="outline-container-orga5f8caa" class="outline-2">
+<h2 id="orga5f8caa"><a href="#orga5f8caa">Organizando o download de pacotes</a></h2>
+<div class="outline-text-2" id="text-orga5f8caa">
 <p>
 Para evitar que pacotes obtidos na execução do script sejam instalados no seu diretório de configuração principal do Emacs, basta atualizar o valor da variável <code>package-user-dir</code> para apontar para um diretório oculto como por exemplo <code>.packages</code>:
 </p>
@@ -218,17 +218,17 @@ Para evitar que pacotes obtidos na execução do script sejam instalados no seu 
 </div>
 </div>
 </div>
-<div id="outline-container-org1e9161b" class="outline-2">
-<h2 id="org1e9161b"><a href="#org1e9161b">Acessando o blog</a></h2>
-<div class="outline-text-2" id="text-org1e9161b">
+<div id="outline-container-org5a74c0b" class="outline-2">
+<h2 id="org5a74c0b"><a href="#org5a74c0b">Acessando o blog</a></h2>
+<div class="outline-text-2" id="text-org5a74c0b">
 <p>
 Para acessar seu blog localmente você pode utilizar o pacote <a href="https://github.com/skeeto/emacs-web-server">simple-httpd</a> para subir um servidor local, após a instalação do pacote basta executar <code>M-x httpd-serve-directory</code>, selecionar o diretório de publicação e então acessar o blog via <a href="http://localhost:8080">http://localhost:8080</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-org0fbe27e" class="outline-2">
-<h2 id="org0fbe27e"><a href="#org0fbe27e">Criando a listagem de posts</a></h2>
-<div class="outline-text-2" id="text-org0fbe27e">
+<div id="outline-container-org333fff5" class="outline-2">
+<h2 id="org333fff5"><a href="#org333fff5">Criando a listagem de posts</a></h2>
+<div class="outline-text-2" id="text-org333fff5">
 <p>
 Todo blog tem uma página listando todos os posts pela data mais recente. Bem, isso é simples de resolver, basta automatizar a geração de uma página <b>.org</b> contendo a listagem dos posts, o sistema de publicação tomará conta do restante. O primeiro passo é adicionar uma propriedade de data aos seus posts:
 </p>

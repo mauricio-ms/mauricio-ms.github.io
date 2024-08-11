@@ -172,7 +172,7 @@ Seguindo com o exemplo, o conjunto de instruções gerado na etapa anterior pode
 #+end_src
 
 ** Geração de código:
-Com o código intermediário otimizado, é hora da geração do código na linguagem destino. Caso esta seja linguagem de máquina, o código gerado poderia ser um Assembly como este:
+Com o código intermediário otimizado, é hora da geração do código na linguagem destino. Caso esta seja linguagem de montagem, o código gerado poderia ser um Assembly como este:
 
 #+begin_src asm
   LDF  R2, id3
