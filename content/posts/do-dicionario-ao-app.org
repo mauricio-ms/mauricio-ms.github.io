@@ -1,5 +1,5 @@
 #+TITLE: Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores
-#+DATE: <2024-08-10>
+#+DATE: <2024-08-11>
 #+COVER: /blog/do-dicionario-ao-app/cover.jpg
 
 Neste post, lhes contarei a saga de como digitalizei o PDF de um dicionário para a criação de um App para o estudo de vocabulário utilizando compiladores.
