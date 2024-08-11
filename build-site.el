@@ -78,7 +78,7 @@
                  (div (@ (class "container"))
                       (p "Fique a vontade para me enviar um email: ms -dot- mauricio93 -at- gmail -dot- com")))))
 
-(defun og-tags (title og-description)
+(defun og-tags (title og-description og-cover)
   (list `(meta (@ (property "og:locale")
 				  (content "pt_BR")))
 		`(meta (@ (property "og:site_name")
@@ -88,9 +88,9 @@
 		`(meta (@ (property "og:type")
 				  (content ,og-type)))
 		`(meta (@ (property "og:image")
-				  (content ,(concat dw/site-url "/img/vida-em-8-bits-banner.png"))))
+				  (content ,og-cover)))
 		`(meta (@ (property "og:image:secure_url")
-				  (content ,(concat dw/site-url "/img/vida-em-8-bits-banner.png"))))
+				  (content ,og-cover)))
 		`(meta (@ (property "og:image:width")
 				  (content "1272")))
 		`(meta (@ (property "og:image:height")
@@ -105,7 +105,7 @@
   :translate-alist
   '((template . dw/org-html-template)))
 
-(cl-defun dw/generate-page (title content info &key (og-description) (publish-date))
+(cl-defun dw/generate-page (title content info &key (og-description) (og-cover) (publish-date))
   (concat
    "<!-- Generated from " (dw/get-commit-hash)  " on " (format-time-string "%Y-%m-%d @ %H:%M") " with " org-export-creator-string " -->\n"
    "<!DOCTYPE html>"
@@ -116,7 +116,7 @@
             (meta (@ (author "Vida em 8 Bits - Maurício Mussatto Scopel")))
             (meta (@ (name "viewport")
                      (content "width=device-width, initial-scale=1, shrink-to-fit=no")))
-			,@(og-tags title og-description)
+			,@(og-tags title og-description og-cover)
 			(link (@ (rel "icon") (type "image/png") (href "/img/favicon.png")))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/iosevka-aile/iosevka-aile.css"))))
             (link (@ (rel "stylesheet") (href ,(concat dw/site-url "/fonts/jetbrains-mono/jetbrains-mono.css"))))
@@ -150,11 +150,22 @@
    contents
    info
    :og-description nil ;; use (org-property "description") when needed
+   :og-cover (get-cover)
    :publish-date (org-export-data (org-export-get-date info "%e de %B, %Y") info)))
+
+(defun get-cover ()
+  "Get cover image for the blog post.
+Try to get form an org-property, otherwise use a default one."
+  (let ((cover (org-property "COVER")))
+	(message "cover %s" cover)
+	(concat dw/site-url
+			(if cover
+				cover
+			  "/img/vida-em-8-bits-banner.png"))))
 
 (defun org-property (key)
   "Get org property KEY."
-  (car (cdr (car (org-collect-keywords '(key))))))
+  (car (cdr (car (org-collect-keywords `(,key))))))
 
 (defun get-post-output-path (org-file pub-dir)
   "Get post output path for ORG-FILE on PUB-DIR."
