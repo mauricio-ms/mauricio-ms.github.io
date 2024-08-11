@@ -195,7 +195,9 @@ Para a criação da gramática, é preciso identificar a estrutura do dicionári
 #+ATTR_HTML: :alt Exemplo de uma entrada de um dicionário
 [[file:Estruturando_o_texto_em_um_mapa_de_traduções/2024-07-06_19-57-57_screenshot.png]]
 
-Estamos interessados em dois elementos: a palavra de origem e sua tradução. Do exemplo acima podemos extrair a seguinte estrutura:
+Estamos interessados em dois elementos: a palavra de origem e sua tradução.
+
+Do exemplo acima podemos extrair a seguinte estrutura:
 
 - Palavra de origem;
 - Classe gramatical;
