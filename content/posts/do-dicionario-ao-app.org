@@ -150,7 +150,7 @@ Se a variável =rate= do exemplo fosse do tipo ponto flutuante, a /Syntax Tree/ 
 [[file:Estruturando_o_texto_em_um_mapa_de_traduções/assignment-type-promotion-example.png]]
 
 ** Geração de código intermediário:
-Com a /Syntax Tree/ pronta, é chegado o momento de produzir código em uma representação intermediária. Este código deve ser simples de produzir e de converter em código de máquina, de modo a simplificar e tornar eficientes os próximos componentes do compilador. Um tipo comum de representação intermediária é o código de três endereços: uma sequência de instruções /assembly-like/ com três operandos por instrução.
+Com a /Syntax Tree/ pronta, é chegado o momento de produzir código em uma representação intermediária. Este código deve ser simples de produzir e de converter em código de linguagem de montagem, de modo a simplificar e tornar eficientes os próximos componentes do compilador. Um tipo comum de representação intermediária é o código de três endereços: uma sequência de instruções /assembly-like/ com três operandos por instrução.
 
 A representação em código de três endereços para o exemplo seria algo assim:
 
