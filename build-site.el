@@ -58,7 +58,9 @@
 
 (defvar dw/site-url (if (string-equal (getenv "CI") "true")
                         "https://vidaem8bits.com"
-                      "http://localhost:8080")
+					  "https://vidaem8bits.com"
+					  ;;"http://localhost:8080" todo - due to the CI problems
+					  )
   "The URL for the site being generated.")
 
 (defun dw/site-header ()
