@@ -1,12 +1,13 @@
 #+TITLE: Como o Bitcoin funciona
 #+DATE: <2025-05-17>
+#+COVER: /blog/como-o-bitcoin-funciona/cover.jpg
 
 O Bitcoin é o protocolo de um sistema distribuído P2P (/peer-to-peer/) construído com base em décadas de pesquisa anteriores em criptografia e sistemas distríbuidos. Este protocolo veio ao mundo em 2008 por meio da publicação de um artigo intitulado [[https://bitcoin.org/bitcoin.pdf]["Bitcoin: A Peer-to-Peer Electronic Cash System"]] assinado pelo pseudônimo Satoshi Nakomoto. Nakamoto também publicou em um fórum online a primeira versão do software com a implementação do protocolo descrito no artigo.
 
-É por meio da rede P2P que é possível transacionar bitcoins. Ao contrário das moedas tradicionais, o bitcoin é puramente digital. As moedas estão presentes apenas nas transações da rede. Toda transação tem uma quantidade de bitcoins associada e é protegida por uma chave, somente quem provar ser o seu detentor é que poderá criar uma transação válida na rede para gastar aqueles bitcoins. Isso é possível por meio de assinatura digital, cada chave possui duas partes relacionadas, uma pública (PK, /Public Key/) e outra privada (SK, /Secret Key/). Toda transação inclui a chave pública de quem está recebendo os bitcoins sendo transacionados, a única maneira de gastar os bitcoins contidos nesta transação é assinando-a digitalmente, algo que só pode ser feito tendo em posse a chave privada associada à chave pública presente na trasação. A assinatura é realizada a partir do conteúdo da mensagem e da chave privada, isso significa que não é possível copiar assinaturas para reutilizar em outras transações, já que qualquer mudança na transação irá gerar uma assinatura completamente diferente, mesmo utilizando a mesma chave privada, como pode ser visualizado na imagem a seguir:
+É por meio da rede P2P que é possível transacionar bitcoins. Ao contrário das moedas tradicionais, o bitcoin é puramente digital. As moedas estão presentes apenas nas transações da rede. Toda transação tem uma quantidade de bitcoins associada e é protegida por uma chave, somente quem provar ser o seu detentor é que poderá criar uma transação válida na rede para gastar aqueles bitcoins. Isso é possível por meio de assinatura digital, cada chave possui duas partes relacionadas, uma pública (PK, /Public Key/) e outra privada (SK, /Secret Key/). Toda transação inclui a chave pública de quem está recebendo os bitcoins sendo transacionados, a única maneira de gastar os bitcoins contidos nesta transação é assinando-a digitalmente, algo que só pode ser feito tendo em posse a chave privada associada à chave pública presente na transação. A assinatura é realizada a partir do conteúdo da mensagem e da chave privada, isso significa que não é possível copiar assinaturas para reutilizar em outras transações, já que qualquer mudança na transação irá gerar uma assinatura completamente diferente, mesmo utilizando a mesma chave privada, como pode ser visualizado na imagem a seguir:
 
-#+CAPTION: Assinatura de transação
-#+ATTR_HTML: :alt Assinatura de transação
+#+CAPTION: Assinatura digital
+#+ATTR_HTML: :alt Assinatura digital
 [[file:pk-sk-btc.png]]
 
 Este processo remove a necessidade de bancos como entidades de custódia no Bitcoin, todos os bitcoins são protegidos pela rede. Logo, por meio da auto-custódia de suas chaves você se transforma no seu próprio banco. Mas como nos ensinou Tio Ben - Com grandes poderes vêm grandes responsabilidades. As chaves podem ser armazenadas de inúmeras maneiras: na sua cabeça via memorização, em um pedaço de papel ou em uma placa metálica, ou em dispositivos projetados para esse fim conhecidos como /Hard-Wallets/. Dependendo do capital que planeja proteger, uma única chave pode ser arriscado, caso seja roubada, adeus para seus fundos. Para resolver este problema existe a possibilidade de criar suas transações com endereços multisig que requerem assinaturas de múltiplas chaves para destravar os bitcoins contidos nas transações.
@@ -39,7 +40,7 @@ Assim como transações são válidas apenas se contiverem assinaturas válidas,
 #+ATTR_HTML: :alt Blockchain
 [[file:blockchain.png]]
 
-Qualquer alteração em uma única transação, por menor que seja, irá alterar o hash gerado para verificação da prova de trabalho, invalidando o bloco, assim como todos os blocos posteriores, uma vez que os blocos são conectados pelo hash da prova de trabalho. Ou seja, para fraudar uma transação incluída no último bloco da rede é necessário refazer todo o trabalho e transmitir o bloco para a rede, antes que um novo bloco seja minerado. Quanto mais blocos forem adicionados após o bloco contendo a transação que se deseja falsificar, são mais blocos para refazer a prova de trabalho. Na prática, para adulterar a /blockchain/ é preciso controlar no mínimo 51% do poder computacional da rede.
+Qualquer alteração em uma única transação, por menor que seja, irá alterar o hash gerado para verificação da prova de trabalho, invalidando o bloco, assim como todos os blocos posteriores, uma vez que os blocos são conectados pelo hash da prova de trabalho. Ou seja, para fraudar uma transação incluída no último bloco da rede é necessário refazer todo o trabalho e transmitir o bloco para a rede, antes que um novo bloco seja minerado. Quanto mais blocos forem adicionados após o bloco contendo a transação que se deseja fraudar, são mais blocos para refazer a prova de trabalho. Na prática, para adulterar a /blockchain/ é preciso controlar no mínimo 51% do poder computacional da rede.
 
 Para recompensar o criador do bloco por todo o trabalho realizado, o protocolo permite a adição de uma transação enviando como pagamento para si próprio alguns bitcoins. É assim que novas unidades de bitcoin são criadas, e é por isso que esse processo é conhecido como mineração e os criadores de bloco como mineradores:
 
@@ -53,15 +54,17 @@ Quando algum minerador resolve a prova de trabalho, ele retransmite o bloco para
 
 * Participando da rede
 
-O ponto mais importante é definir quem você quer ser na rede, alguém que delega a responsabilidade da custódia das suas chaves para outras entidades, alguém que delega a responsabilidade da validação das trasações para outros nodos, ou um verdadeiro soberano dos seus bitcoins. Estas três opções podem ser acessadas das seguintes maneiras:
+O ponto mais importante é definir quem você quer ser na rede, alguém que delega a responsabilidade da custódia das suas chaves para outras entidades, alguém que delega a responsabilidade da validação das transações para outros nodos, ou um verdadeiro soberano dos seus bitcoins. Estas três opções podem ser acessadas das seguintes maneiras:
 
-- Via corretoras: neste cenário você não detém a posse das chaves, você cria uma conta na corretora, envia dinheiro fiat em troca da promessa da corretora de bitcoins. Como Andreas Antonopulous disse - /Your keys, your coins. Not your keys, not your coins/;
+- Via corretoras: neste cenário você não detém a posse das chaves, você cria uma conta na corretora, envia dinheiro fiat em troca da promessa da corretora por bitcoins. Como Andreas Antonopulous disse - /Your keys, your coins. Not your keys, not your coins/;
 - Sendo cliente da rede: neste cenário, você detém a posse das chaves, mas delega a resposabildade da validação das transações para outros nodos da rede;
 - Sendo um /full node/: neste cenário você torna-se verdadeiramente soberando em relação aos seus bitcoins, você detêm a posse das suas chaves e você valida todas as transações. Além de ser soberano, você aumenta a segurança da rede, sendo um nodo a mais que irá validar todas as transações transmitidas para a rede.
 
 A maneira mais comum de se comunicar com a rede Bitcoin é por meio de wallets que implementam o protocolo, permitindo a criação de transações, bem como a geração de endereços para o recebimento de pagamentos. Existem variados tipos de wallets: desktop, mobile e web. Sendo um cliente, a sua wallet irá se comunicar com outros nodos da rede. No entando, se você roda o seu próprio nodo, você pode configurar a sua wallet para comunicar-se exclusivamente com o seu nodo.
 
 Era isso para o primeiro artigo sobre Bitcoin, nos próximos irei aprofundar na parte técnica de tópicos como chaves, endereços e transações.
+
+*Don't trust, verify. 🕵🏻‍♂️*
 
 *Referências*
 
