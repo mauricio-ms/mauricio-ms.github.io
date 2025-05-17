@@ -1,3 +1,6 @@
+** [[../blog/como-o-bitcoin-funciona][Como o Bitcoin funciona]]
+
+17 de maio, 2025 por Maurício Mussatto Scopel
 ** [[../blog/do-dicionario-ao-app][Do dicionário ao App: Como digitalizar um dicionário em PDF utilizando Compiladores]]
 
 11 de agosto, 2024 por Maurício Mussatto Scopel
