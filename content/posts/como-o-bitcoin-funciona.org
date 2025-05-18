@@ -1,4 +1,4 @@
-#+TITLE: Como o Bitcoin funciona
+#+TITLE: Como o Bitcoin funciona?
 #+DATE: <2025-05-17>
 #+COVER: /blog/como-o-bitcoin-funciona/cover.png
 
