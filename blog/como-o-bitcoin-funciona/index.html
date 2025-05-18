@@ -1,5 +1,5 @@
-<!-- Generated from c6a1136 on 2025-05-17 @ 22:34 with Emacs 30.1 (Org mode 9.7.11) -->
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Como o Bitcoin funciona"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/blog/como-o-bitcoin-funciona/cover.png"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/blog/como-o-bitcoin-funciona/cover.png"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/como-o-bitcoin-funciona"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Como o Bitcoin funciona - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Como o Bitcoin funciona</h1><p class="site-post-meta">17 de maio, 2025</p><div id="content"><p>
+<!-- Generated from 8178e70 on 2025-05-17 @ 22:50 with Emacs 30.1 (Org mode 9.7.11) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="Vida em 8 Bits - Maurício Mussatto Scopel"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Vida em 8 Bits"/><meta property="og:title" content="Como o Bitcoin funciona?"/><meta property="og:type" content="article"/><meta property="og:image" content="https://vidaem8bits.com/blog/como-o-bitcoin-funciona/cover.png"/><meta property="og:image:secure_url" content="https://vidaem8bits.com/blog/como-o-bitcoin-funciona/cover.png"/><meta property="og:image:width" content="1272"/><meta property="og:image:height" content="664"/><meta property="og:url" content="https://vidaem8bits.com/como-o-bitcoin-funciona"/><meta property="article:section" content="blog"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://vidaem8bits.com/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/code.css"/><link rel="stylesheet" href="https://vidaem8bits.com/css/site.css"/><script async="" data-id="101454377" src="//static.getclicky.com/js"></script><title>Como o Bitcoin funciona? - Vida em 8 Bits</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://vidaem8bits.com/img/vida-em-8-bits.png" alt="Vida em 8 bits"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/blog/">Blog</a> <a class="nav-link" target="_blank" href="https://github.com/mauricio-ms">GitHub</a> </nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Como o Bitcoin funciona?</h1><p class="site-post-meta">17 de maio, 2025</p><div id="content"><p>
 O Bitcoin é o protocolo de um sistema distribuído P2P (<i>peer-to-peer</i>) construído com base em décadas de pesquisa anteriores em criptografia e sistemas distríbuidos. Este protocolo veio ao mundo em 2008 por meio da publicação de um artigo intitulado <a href="https://bitcoin.org/bitcoin.pdf">"Bitcoin: A Peer-to-Peer Electronic Cash System"</a> assinado pelo pseudônimo Satoshi Nakomoto. Nakamoto também publicou em um fórum online a primeira versão do software com a implementação do protocolo descrito no artigo.
 </p>
 
@@ -8,7 +8,7 @@ O Bitcoin é o protocolo de um sistema distribuído P2P (<i>peer-to-peer</i>) co
 </p>
 
 
-<div id="org13de58f" class="figure">
+<div id="orgb4d291a" class="figure">
 <p><img src="./pk-sk-btc.png" alt="Assinatura digital" />
 </p>
 <p><span class="figure-number">Figura 1: </span>Assinatura digital</p>
@@ -17,9 +17,9 @@ O Bitcoin é o protocolo de um sistema distribuído P2P (<i>peer-to-peer</i>) co
 <p>
 Este processo remove a necessidade de bancos como entidades de custódia no Bitcoin, todos os bitcoins são protegidos pela rede. Logo, por meio da auto-custódia de suas chaves você se transforma no seu próprio banco. Mas como nos ensinou Tio Ben - Com grandes poderes vêm grandes responsabilidades. As chaves podem ser armazenadas de inúmeras maneiras: na sua cabeça via memorização, em um pedaço de papel ou em uma placa metálica, ou em dispositivos projetados para esse fim conhecidos como <i>Hard-Wallets</i>. Dependendo do capital que planeja proteger, uma única chave pode ser arriscado, caso seja roubada, adeus para seus fundos. Para resolver este problema existe a possibilidade de criar suas transações com endereços multisig que requerem assinaturas de múltiplas chaves para destravar os bitcoins contidos nas transações.
 </p>
-<div id="outline-container-orgd6cfe63" class="outline-2">
-<h2 id="orgd6cfe63"><a href="#orgd6cfe63">Segurança da Rede</a></h2>
-<div class="outline-text-2" id="text-orgd6cfe63">
+<div id="outline-container-org3c30398" class="outline-2">
+<h2 id="org3c30398"><a href="#org3c30398">Segurança da Rede</a></h2>
+<div class="outline-text-2" id="text-org3c30398">
 <p>
 Mas você pode estar se perguntando, como é que a rede garante a segurança de todas as transações. Isso é trabalho de todos os nodos da rede. Cada nodo recebe todas as transações enviadas através da rede e verifica uma por uma. Esta verificação deve garantir que a assinatura realizada por quem transmitiu a transação para a rede é válida, ou seja, quem assinou a transação é o dono da chave privada relacionada com a chave pública presente na transação. Uma transação têm vários campos, mas para o entendimento do processo de verificação, basta considerarmos o seguinte:
 </p>
@@ -39,15 +39,15 @@ Agora espero que tenho ficado claro o motivo pelo qual se diz que a natureza des
 </p>
 </div>
 </div>
-<div id="outline-container-org5061863" class="outline-2">
-<h2 id="org5061863"><a href="#org5061863">Consenso da Rede</a></h2>
-<div class="outline-text-2" id="text-org5061863">
+<div id="outline-container-org32c4332" class="outline-2">
+<h2 id="org32c4332"><a href="#org32c4332">Consenso da Rede</a></h2>
+<div class="outline-text-2" id="text-org32c4332">
 <p>
 Com transações sendo transmitidas de nodo para nodo sem qualquer ordem, como é que a rede chega a um consenso para que todos os nodos concordem com as mesmas transações válidas na mesma ordem? Este foi o maior problema que Satoshi Nakamoto resolveu, e o fez por meio do algoritmo de <i>proof-of-work</i> (prova de trabalho). Quando uma transação é transmitida para a rede, ela é validada, mas ainda não faz parte do livro-razão do Bitcoin, mais conhecido como <i>blockchain</i> - este nome se dá pois a estrutura de dados utilizada para armazenar as transações é uma lista encadeada de blocos. Para a inclusão de um novo bloco na <i>blockchain</i> é necessário uma prova de trabalho que confirme que recursos computacionais foram investidos para a validação de todas as transações presentes naquele bloco. O algoritmo <i>proof-of-work</i> consiste na descoberta de um número que aplicado à uma função de hash juntamente com os dados de todas as transações selecionadas para fazerem parte do bloco, gere como resultado uma saída que satisfaça a dificuldade da rede. Ao conseguir este número o bloco pode ser retransmitido para a rede, todos os nodos irão validar a prova de trabalho, e uma vez confirmada, irão incluir aquele bloco em suas <i>blockchains</i>, tornando assim possível o consenso entre todos os nodos da rede. A função hash aplicada não é qualquer função, é uma função de hash criptográfica, o <code>SHA256</code>, isso significa que não existe maneira de acelerar o processo de descoberta do valor sendo buscado, a única maneira é aplicar a função a todos os valores possíveis. A seguir está ilustrado um exemplo da descoberta do número para a validação de um bloco:
 </p>
 
 
-<div id="orgd385ea5" class="figure">
+<div id="org9de17cd" class="figure">
 <p><img src="./proof-of-work.png" alt="Proof-of-work" />
 </p>
 <p><span class="figure-number">Figura 2: </span>Proof-of-work</p>
@@ -62,7 +62,7 @@ Assim como transações são válidas apenas se contiverem assinaturas válidas,
 </p>
 
 
-<div id="org2c9d10e" class="figure">
+<div id="org66284ae" class="figure">
 <p><img src="./blockchain.png" alt="Blockchain" />
 </p>
 <p><span class="figure-number">Figura 3: </span>Blockchain</p>
@@ -77,7 +77,7 @@ Para recompensar o criador do bloco por todo o trabalho realizado, o protocolo p
 </p>
 
 
-<div id="orgb582e2e" class="figure">
+<div id="orge8d9931" class="figure">
 <p><img src="./mining.png" alt="Mineração" />
 </p>
 <p><span class="figure-number">Figura 4: </span>Mineração</p>
@@ -92,9 +92,9 @@ Quando algum minerador resolve a prova de trabalho, ele retransmite o bloco para
 </p>
 </div>
 </div>
-<div id="outline-container-org4f0ee87" class="outline-2">
-<h2 id="org4f0ee87"><a href="#org4f0ee87">Participando da rede</a></h2>
-<div class="outline-text-2" id="text-org4f0ee87">
+<div id="outline-container-orgc8e0291" class="outline-2">
+<h2 id="orgc8e0291"><a href="#orgc8e0291">Participando da rede</a></h2>
+<div class="outline-text-2" id="text-orgc8e0291">
 <p>
 O ponto mais importante é definir quem você quer ser na rede, alguém que delega a responsabilidade da custódia das suas chaves para outras entidades, alguém que delega a responsabilidade da validação das transações para outros nodos, ou um verdadeiro soberano dos seus bitcoins. Estas três opções podem ser acessadas das seguintes maneiras:
 </p>
