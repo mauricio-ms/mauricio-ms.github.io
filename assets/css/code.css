@@ -2,6 +2,12 @@ body {
   color: #eeffff;
   background-color: #292d3e;
 }
+img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
 .org-ansi-color-black {
   /* ansi-color-black */
   color: #292d3e;
